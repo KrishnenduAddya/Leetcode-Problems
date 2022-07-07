@@ -1,0 +1,11 @@
+public class Solution {
+    public double AngleClock(int hour, int minutes) {
+        // 1 hour = 30 angle for hour hand
+        // 1 minute = 0.5 angle for hour hand(In 60 minutes hour hand moves 30 angle)
+        // 1 minute = 6 angle for minute hand
+        double hourAngle = (hour % 12) * 30 + minutes * 0.5;
+        double minuteAngle = minutes * 6;
+        double diff = Math.Abs(hourAngle - minuteAngle);
+        return Math.Min(diff, 360 - diff);
+    }
+}
