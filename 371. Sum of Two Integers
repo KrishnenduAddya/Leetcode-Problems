@@ -1,0 +1,16 @@
+public class Solution {
+    public int GetSum(int a, int b) {
+        // Store the carry in b using a & b
+        // Store the addition result in a without carry using a ^ b
+        
+        while(b != 0)
+        {
+            // Carry shift left for further addition
+            int carry = (a & b) << 1;
+            a = a ^ b;
+            b = carry;
+        }
+        
+        return a;
+    }
+}
