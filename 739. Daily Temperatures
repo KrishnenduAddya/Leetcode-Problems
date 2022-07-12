@@ -1,0 +1,19 @@
+public class Solution {
+    public int[] DailyTemperatures(int[] temperatures) {
+        int n = temperatures.Length;
+        int[] result = new int[n];
+        Stack<int> stack = new Stack<int>();
+        for(int i = 0; i < n; i++) 
+        {
+            // For temperature greater than temperature for top of stack pop top and fill result
+            while(stack.Count > 0 && temperatures[i] > temperatures[stack.Peek()])
+            {
+                int index = stack.Pop();
+                result[index] = i - index;
+            }
+            // Smaller or equal temperature can be pushed over the top of the array
+            stack.Push(i);
+        }
+        return result;
+    }
+}
