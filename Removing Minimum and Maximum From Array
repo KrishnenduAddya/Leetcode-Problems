@@ -1,0 +1,24 @@
+//Find index min of the minimum
+//Find index max of the maximum
+
+//To remove element nums[i],
+//we can remove i + 1 elements from front,
+//or we can remove n - i elements from back.
+
+
+public class Solution {
+    public int MinimumDeletions(int[] nums) {
+        int min = 0, max = 0;
+        int n = nums.Length;
+        for(int i = 0; i < n; i++)
+        {
+            if(nums[i] < nums[min])
+                min = i;
+            else if(nums[i] > nums[max])
+                max = i;
+        }
+        
+        return Math.Min(Math.Min(Math.Max(min + 1, max + 1), Math.Max(n - min, n - max)), Math.Min(min + 1 + n - max, max + 1 + n - min));
+        
+    }
+}
