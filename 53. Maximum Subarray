@@ -1,0 +1,14 @@
+// Kadane's Algorithm
+// For each element decide whether to continue the existing subarray or create a new sub array
+
+public class Solution {
+    public int MaxSubArray(int[] nums) {
+        int maximum = nums[0];
+        int maxEnding = nums[0];
+        for(int i = 1; i < nums.Length; i++)
+        {
+            maxEnding = Math.Max(maxEnding + nums[i], nums[i]);
+            maximum = Math.Max(maximum, maxEnding);
+        }
+        return maximum;
+    }
