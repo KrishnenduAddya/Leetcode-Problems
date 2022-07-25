@@ -1,0 +1,40 @@
+public class Solution {
+    public int SplitArray(int[] nums, int m) {
+        int low = 0, high = 0, n = nums.Length;
+        
+        // Initialize low with largest number in the array and high with array sum as for single element subarray the largest sum will be at atleast the largest number and for whole array maximum sum will be array sum
+        for(int i = 0; i < n; i++)
+        {
+            low = Math.Max(low,nums[i]);
+            high = high + nums[i];
+        }
+        
+        int mid = 0, ans = 0;
+        while(low <= high)
+        {
+            mid = low + (high - low) / 2;
+            //Count stores how many partion can be done for a given sum = mid
+            int count = 1, tempSum = 0;
+            for(int i = 0; i < n; i++)
+            {
+                if(tempSum + nums[i] <= mid) 
+                    tempSum = tempSum + nums[i];
+                else
+                {
+                    tempSum = nums[i];
+                    count++;
+                }
+            }
+            
+            // If count <= m i.e partition possible for largest sum = mid, so we will check whether we can minimize the largest sum
+            if(count <= m)
+            {
+                ans = mid;
+                high = mid - 1;
+            }
+            else 
+                low = mid + 1;
+        }  
+        return ans;
+    }
+}
