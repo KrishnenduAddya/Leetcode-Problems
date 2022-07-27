@@ -1,0 +1,53 @@
+1st Approach
+-------------
+// Fill the path1 and path2 list by traversing nodes from root to p and q respectively
+// From start of each path check upto which node both node values match
+
+public class Solution {
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        List<TreeNode> path1 = new List<TreeNode>();
+        List<TreeNode> path2 = new List<TreeNode>();
+        
+        if(!FindPath(root, path1, p) || !FindPath(root, path2, q))
+            return null;
+        
+        TreeNode result = null;
+        for(int i = 0; i < path1.Count && i < path2.Count; i++)
+        {
+            if(path1[i].val == path2[i].val)
+                result = path1[i];
+            else
+                break;
+        }
+        return result;
+    }
+    
+    private bool FindPath(TreeNode root, List<TreeNode> path, TreeNode v)
+    {
+        if(root == null) return false;
+        path.Add(root);
+        if(root.val == v.val) return true;
+        if(FindPath(root.left, path, v) || FindPath(root.right, path, v))
+            return true;
+        path.RemoveAt(path.Count - 1);
+        return false;
+    }
+}
+
+2nd Approach
+-------------
+
+public class Solution {
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null || root == p || root == q)
+            return root;
+        TreeNode left = LowestCommonAncestor(root.left,  p,  q);
+        TreeNode right = LowestCommonAncestor(root.right,  p,  q);
+        if(left == null)
+            return right;
+        else if (right == null)
+            return left;
+        else
+            return root;
+    }
+}
