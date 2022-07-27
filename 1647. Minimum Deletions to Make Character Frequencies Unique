@@ -1,0 +1,25 @@
+public class Solution {
+    public int MinDeletions(string s) {
+        int n = s.Length;
+        int[] freq = new int[26];
+        HashSet<int> uniqueFreq = new HashSet<int>();
+        int deletionCount = 0;
+        
+        // Store the frequencies of every character of the string
+        for (int i = 0; i < n; i++)
+            freq[s[i] - 'a']++;
+        
+        // Start from frequency of a
+        for (int i = 0; i < 26; i++)
+        {
+            // If frequency of character > 0 and also already found then try deleting frequency by one 
+            // and check whether its unique, uniqueness checked by the set addition
+            while (freq[i] > 0 && !uniqueFreq.Add(freq[i]))
+            {
+                freq[i]--;
+                deletionCount++;
+            }
+        }        
+        return deletionCount;
+    }
+}
