@@ -1,0 +1,55 @@
+1st Approach
+---------------
+
+public class Solution {
+    public int Trap(int[] height) {
+        int water = 0;
+        int n = height.Length;
+        
+        // Find lmax and rmax for every bar
+        // Take the minimum of lmax and rmax, find the water
+        for(int i = 1; i < n; i++)
+        {
+            int lmax = height[i];
+            for(int j = 0; j < i; j++)
+                lmax = Math.Max(lmax, height[j]);
+            
+            int rmax = height[i];
+            for(int j = i + 1; j < n; j++)
+                rmax = Math.Max(rmax, height[j]);
+            
+            water = water + Math.Min(lmax, rmax) - height[i];
+        }
+        return water;
+    }
+}
+
+2nd Approach
+---------------
+
+public class Solution {
+    public int Trap(int[] height) {
+        int water = 0;
+        int n = height.Length;
+        
+        // 1st and last bar can not store any water
+        // Precompute lmax and rmax for other bars
+        // Take the minimum of lmax and rmax, find the water
+        int[] lmax = new int[n];
+        lmax[0] = height[0];
+        
+        for(int i = 1; i < n; i++)
+            lmax[i] = Math.Max(height[i], lmax[i - 1]);
+        
+        int[] rmax = new int[n];
+        rmax[n - 1] = height[n - 1];
+        
+        for(int i = n - 2; i >= 0; i--)
+            rmax[i] = Math.Max(height[i], rmax[i + 1]);
+        
+        for(int i = 1; i < n - 1; i++)
+            water = water + Math.Min(lmax[i], rmax[i]) - height[i];
+        
+        return water;
+    }
+}
