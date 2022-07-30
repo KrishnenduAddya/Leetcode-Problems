@@ -1,0 +1,61 @@
+public class Solution {
+    public int NextGreaterElement(int n) {
+        // Same as Next Permutation
+        int[] nums = ToIntArray(n);
+        int len = nums.Length, index1 = -1, index2 = -1;
+        for(int i = len - 2; i >= 0; i--)
+        {
+            if(nums[i] < nums[i + 1]) 
+            {
+                index1 = i;
+                break;
+            }
+        }
+        if(index1 == -1)
+            return -1;
+       for(int i = len - 1; i > index1; i--)
+       {
+           if(nums[i] > nums[index1]) 
+           {
+               index2 = i;
+               break;
+           }
+       }
+        Swap(nums, index1, index2);
+        Reverse(nums, index1 + 1, len - 1);
+        long val = ToLong(nums);
+        return val <= Int32.MaxValue ? (int)val : -1;
+    }
+    
+    private int[] ToIntArray(int n) 
+    {
+        Stack<int> numbers = new Stack<int>();
+        while(n > 0)
+        {
+            numbers.Push(n % 10);
+            n = n / 10;
+        }
+        return numbers.ToArray();
+    }
+    
+    private long ToLong(int[] nums) 
+    {
+        long val = 0;
+        foreach(int i in nums)
+            val = val * 10 + i;
+        return val;
+    }
+    
+    public void Swap(int[] nums, int i, int j)
+    {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+    public void Reverse(int[] nums, int i, int j)
+    {
+        while(i < j)
+            Swap(nums, i++, j--);
+    }
+}
