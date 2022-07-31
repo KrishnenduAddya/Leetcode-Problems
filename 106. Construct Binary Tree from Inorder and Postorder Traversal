@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode BuildTree(int[] inorder, int[] postorder) {
+        Dictionary<int, int> mapInOrder = new Dictionary<int, int>();
+
+        int n = inorder.Length;
+        for(int i = 0; i < n; i++)
+            mapInOrder.Add(inorder[i], i);
+
+        TreeNode root = BuildTree(postorder, 0, n - 1, inorder, 0, n - 1, mapInOrder);
+        return root;
+    }
+
+    private TreeNode BuildTree(int[] postorder, int postStart, int postEnd, int[] inorder, int inStart, int inEnd, Dictionary<int, int> mapInOrder) {
+        if(postStart > postEnd || inStart > inEnd) return null;
+
+        TreeNode root = new TreeNode(postorder[postEnd]);
+        int inRootIndex = mapInOrder[root.val];
+        int numsLeft = inRootIndex - inStart;
+
+        root.left = BuildTree(postorder, postStart, postStart + numsLeft - 1, inorder, inStart, inRootIndex - 1, mapInOrder);
+        root.right = BuildTree(postorder, postStart + numsLeft, postEnd - 1, inorder, inRootIndex + 1, inEnd, mapInOrder);
+
+        return root;
+    }
+}
