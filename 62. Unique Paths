@@ -1,0 +1,58 @@
+// The robot can reach to any cell either from top or left cell, 
+// so to get the total number of unique paths any cell we add the paths from top and left
+
+Tabulation Approach
+----------------------
+T.C - O(M*N)
+S.C - O(M*N)
+
+// Google
+public class Solution {
+    public int UniquePaths(int m, int n) {
+        int[,] dp = new int[m,n];
+        
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(i == 0 || j == 0)
+                    dp[i, j] = 1;
+                else
+                    dp[i, j] = dp[i - 1, j] + dp[i, j - 1];
+            }
+        }
+        return dp[m - 1, n - 1];
+    }
+}
+
+// As for any cell we need only current row and previous row data,
+// so we can take help of only two array of n size
+
+Space Optimized Solution
+--------------------------
+T.C - O(M*N)
+S.C - O(N)
+
+
+// Google
+public class Solution {
+    public int UniquePaths(int m, int n) {
+        int[] prev = new int[n];
+        int[] curr = new int[n];
+        
+        for (int i = 0; i < n; i++)
+        {
+            prev[i] = 1;
+            curr[i] = 1;
+        }
+        
+        for (int i = 1; i < m; i++)
+        {
+            for (int j = 1; j < n; j++)
+                curr[j] = prev[j] + curr[j - 1];
+            //Array.Copy(curr, prev, n);
+            prev = curr;
+        }
+        return prev[n - 1];
+    }
+}
