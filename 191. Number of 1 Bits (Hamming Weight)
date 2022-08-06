@@ -17,6 +17,7 @@ public class Solution {
 2nd Approach
 --------------
 
+// Brian Karnighan's Algorithm
 // Change the first set bit from right to 0
 public class Solution {
     public int HammingWeight(uint n) {
