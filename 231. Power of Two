@@ -1,0 +1,13 @@
+// If a number is power of 2 then number / 2 remainder (number % 2) produces 0 everytime until 1
+
+public class Solution {
+    public bool IsPowerOfTwo(int n) {
+        if (n == 0)
+            return false;
+    
+        while (n % 2 == 0) {
+            n = n / 2; 
+        }
+        return n == 1;
+    }
+}
