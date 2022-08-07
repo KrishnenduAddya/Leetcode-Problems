@@ -1,0 +1,20 @@
+public class Solution {
+    public TreeNode SortedArrayToBST(int[] nums) {
+            if (nums == null || nums.Length == 0) 
+                return null;
+            return ConvertToBST(nums, 0, nums.Length - 1);
+        }
+
+    private TreeNode ConvertToBST(int[] nums, int left, int right) 
+    {
+        if (left > right) 
+            return null;
+        
+        int mid = left + (right - left) / 2;
+        TreeNode curr = new TreeNode(nums[mid]);
+        curr.left = ConvertToBST(nums, left, mid - 1);
+        curr.right = ConvertToBST(nums, mid + 1, right);
+        
+        return curr;
+    }
+}
