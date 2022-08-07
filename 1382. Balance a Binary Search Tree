@@ -1,0 +1,32 @@
+// First perform a inorder traversal of the BST as a result you will get a sorted array, perform binary search
+
+public class Solution {
+    List<int> inorder = new List<int>();
+    public TreeNode BalanceBST(TreeNode root) {
+        InOrderTraversal(root);
+        return ConvertToBST(0, inorder.Count - 1);
+    }
+    
+    private void InOrderTraversal(TreeNode root)
+    {
+        if(root != null)
+        {
+            InOrderTraversal(root.left);
+            inorder.Add(root.val);
+            InOrderTraversal(root.right);
+        }
+    }
+    
+    private TreeNode ConvertToBST(int left, int right) 
+    {
+        if (left > right) 
+            return null;
+        
+        int mid = left + (right - left) / 2;
+        TreeNode curr = new TreeNode(inorder[mid]);
+        curr.left = ConvertToBST(left, mid - 1);
+        curr.right = ConvertToBST(mid + 1, right);
+        
+        return curr;
+    }
+}
