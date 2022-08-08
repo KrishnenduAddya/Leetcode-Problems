@@ -1,0 +1,37 @@
+public class Solution {
+    public TreeNode SortedListToBST(ListNode head) {
+        // Concept used Convert Sorted Array to BST
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return new TreeNode(head.val);
+
+        // Find mid
+        ListNode newNode = new ListNode(0);
+        newNode.next = head;
+        
+        ListNode prev = newNode;
+        ListNode slow = head; 
+        ListNode fast = head;
+        
+        while (fast != null && fast.next != null) 
+        {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Prev is one before mid (1st part head to prev)
+        prev.next = null;
+        
+        TreeNode root = new TreeNode(slow.val); // mid = slow so make it root
+        
+        // ListNode 2ndPartHead = slow.next;
+        ListNode newHead = slow.next;
+
+        root.left = SortedListToBST(head); // left = head to mid - 1
+        root.right = SortedListToBST(newHead); // right = mid + 1(newHead) to end
+
+        return root;
+    }
+}
