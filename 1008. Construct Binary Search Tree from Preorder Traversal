@@ -1,0 +1,17 @@
+public class Solution {
+    int index = 0;
+    public TreeNode BstFromPreorder(int[] preorder) {
+         return BSTFromPreOrder(preorder, Int32.MaxValue);
+    }
+
+    public TreeNode BSTFromPreOrder(int[] preorder, int bound) {
+        if (index == preorder.Length || preorder[index] > bound) 
+            return null;
+        TreeNode root = new TreeNode(preorder[index++]);
+        // If we want place a number to the left of root, upper bound will be the root itself
+        root.left = BSTFromPreOrder(preorder, root.val);
+        // If we want place a number to the right of root, upper bound will be the upper bound of the root
+        root.right = BSTFromPreOrder(preorder, bound);
+        return root;
+    }
+}
