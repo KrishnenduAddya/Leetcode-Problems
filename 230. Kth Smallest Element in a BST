@@ -1,0 +1,45 @@
+public class Solution {
+    List<int> inorder = new List<int>();
+    public int KthSmallest(TreeNode root, int k) {
+        InOrderTraversal(root);
+        return inorder[k - 1];
+    }
+    
+    private void InOrderTraversal(TreeNode root)
+    {
+        if(root != null)
+        {
+            InOrderTraversal(root.left);
+            inorder.Add(root.val);
+            InOrderTraversal(root.right);
+        }
+    }
+}
+Without extra space
+
+public class Solution {
+    int counter = 0, element;
+    public int KthSmallest(TreeNode root, int k) {
+        InOrderTraversal(root, k);
+        return element;
+    }
+    
+    private void InOrderTraversal(TreeNode root, int k)
+    {
+        if(root != null)
+        {
+            InOrderTraversal(root.left, k);
+            counter++;
+            if(counter == k)
+                element = root.val;
+            InOrderTraversal(root.right, k);
+        }
+    }
+}
+To find the kth largest we can reverse the call of left and right like
+
+			InOrderTraversal(root.right, k);
+            counter++;
+            if(counter == k)
+                element = root.val;
+            InOrderTraversal(root.left, k);
