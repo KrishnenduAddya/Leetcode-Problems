@@ -1,0 +1,52 @@
+// 1st Approach using Inorder + Two Sum Sorted Array Binary Search
+
+public class Solution {
+    List<int> inorder = new List<int>();
+    public bool FindTarget(TreeNode root, int k) {
+        InOrderTraversal(root);
+        int start = 0;
+        int end = inorder.Count - 1;
+        
+        while(start < end)
+        {
+            int sum = inorder[start] + inorder[end];
+            if(sum == k)
+                return true;
+            else if(sum < k)
+                start++;
+            else
+                end--;
+        }
+        return false;
+    }
+    
+    private void InOrderTraversal(TreeNode root)
+    {
+        if(root != null)
+        {
+            InOrderTraversal(root.left);
+            inorder.Add(root.val);
+            InOrderTraversal(root.right);
+        }
+    }
+}
+
+// 2nd Approach using Set
+
+public class Solution {
+    public bool FindTarget(TreeNode root, int k) {
+        HashSet<int> mySet = new HashSet<int>();
+        return Find(root, mySet, k);
+    }
+    
+    private bool Find(TreeNode root, HashSet<int> mySet, int sum)
+    {
+        if(root == null)
+            return false;
+        if(mySet.Contains(sum - root.val))
+            return true;
+        else
+            mySet.Add(root.val);
+        return Find(root.left, mySet, sum) || Find(root.right, mySet, sum);
+    }
+}
