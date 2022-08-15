@@ -1,6 +1,9 @@
 1st Approach
 -------------
 
+// Simply Inorder Traversal from lowest value to increasing order, add the value if it falls between range,
+// return when value exceeds high range (Inorder traversal of BST genearates increasing sorted array)
+
 public class Solution {
     int sum = 0;
     public int RangeSumBST(TreeNode root, int low, int high) {
@@ -23,6 +26,10 @@ public class Solution {
 
 2nd Approach
 -------------
+
+// Traverse from root to left and right both, if the value in range add that value and explore its left and right,
+// if value < low then there is no possibility of getting the value in range in left side so explore only right
+// if value > high then there is no possibility of getting the value in range in right side so explore only left
 
 public class Solution {
     public int RangeSumBST(TreeNode root, int low, int high) {
