@@ -1,0 +1,19 @@
+public class Solution {
+    public int FirstUniqChar(string s) {
+        int[] countArray = new int[26];
+        // Step 1. Prepare a count array to hold the number occurences of characters of the string s
+        foreach(char ch in s)
+        {
+            countArray[ch - 'a']++; 
+        }
+        // Step 2. Check from left the occurence of a character is 1 or not 
+        for(int i = 0; i < s.Length; i++)
+        {
+            if(countArray[s[i] - 'a'] == 1)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
