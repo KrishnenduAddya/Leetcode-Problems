@@ -1,0 +1,20 @@
+public class Solution {
+    public int UniqueMorseRepresentations(string[] words) {
+    string[] morse = new string[]{
+            ".-","-...","-.-.","-..",".","..-.","--.",
+            "....","..",".---","-.-",".-..","--","-.",
+            "---",".--.","--.-",".-.","...","-","..-",
+            "...-",".--","-..-","-.--","--.."};
+        
+        // Store unique transformations in the set and return size of the set 
+        HashSet<string> seen = new HashSet<string>();
+        foreach(string word in words)
+        {
+            StringBuilder code = new StringBuilder();
+            foreach(char ch in word)
+                code.Append(morse[ch - 'a']);
+            seen.Add(code.ToString());
+        }
+        return seen.Count;
+    }
+}
