@@ -1,0 +1,66 @@
+1st Approach
+--------------
+
+T.C = O(M * N)
+S.C = O(M + N)
+
+public class Solution {
+    public void SetZeroes(int[][] matrix) {
+        int n = matrix.Length, m = matrix[0].Length;
+        int[] rowArray = new int[n];
+        int[] columnArray = new int[m];
+        
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                if(matrix[i][j] == 0)
+                    rowArray[i] = columnArray[j] = -1;
+            }
+        }
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                if(rowArray[i] == -1 || columnArray[j] == -1)
+                    matrix[i][j] = 0;
+            }
+        }
+    }
+}
+
+2nd Approach
+-------------
+
+T.C = O(M * N)
+S.C = O(1)
+
+Here matrix's first row and column themselves act as the auxiliary array (rowArray and columnArray) used in 1st Approach
+Here col0 variable is used to detect matrix[0][0] cell is made 0 by 1st row or 1st column
+
+public class Solution {
+    public void SetZeroes(int[][] matrix) {
+        int n = matrix.Length, m = matrix[0].Length;
+        int col0 = 1;
+        for(int i = 0; i < n; i++)
+        {
+            if(matrix[i][0] == 0)
+                col0 = 0;
+            for(int j = 1; j < m; j++)
+            {
+                if(matrix[i][j] == 0)
+                    matrix[i][0] = matrix[0][j] = 0;
+            }
+        }
+        for(int i = n - 1; i >= 0; i--)
+        {
+            for(int j = m - 1; j >= 1; j--)
+            {
+                if(matrix[i][0] == 0 || matrix[0][j] == 0)
+                   matrix[i][j] = 0;
+            }
+            if(col0 == 0)
+                matrix[i][0] = 0;
+        }
+    }
+}
