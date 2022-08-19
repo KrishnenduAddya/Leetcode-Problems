@@ -1,10 +1,18 @@
 1st Approach
----------------
+-------------
+
+T.C = O(M + N)
+S.C = O(1)
+
+// Start from top right corner 
+// If the element = target return true
+// If the element > target, that means the target can be found in the same row column should be decreased and check (as column elements sorted)
+// If the element < target, that means the target can be found in the next row so row should be increased and check (as row elements sorted)
 
 public class Solution {
     public bool SearchMatrix(int[][] matrix, int target) {
         int n = matrix.Length, m = matrix[0].Length;
-        int i = 0, j = m - 1;
+        int i = 0, j = matrix[0].Length - 1;
         while(i<n && j>=0)
         {
             if(matrix[i][j] == target)
@@ -20,6 +28,16 @@ public class Solution {
 
 2nd Approach
 --------------
+
+T.C = O(log(M*N))
+S.C = O(1)
+
+// Due to the below conditions we can apply binary search
+
+// Integers in each row are sorted from left to right.
+// The first integer of each row is greater than the last integer of the previous row.
+
+So if we  flatten the matrix in an 1D array it will be sorted array so we can apply binary search
 
 public class Solution {
     public bool SearchMatrix(int[][] matrix, int target) {
