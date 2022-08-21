@@ -1,0 +1,47 @@
+Approach 1
+-----------
+
+// Basic solution with T.C = O(N * K)
+
+public class Solution {
+    public int MinimumRecolors(string blocks, int k) {
+        int n = blocks.Length;
+        int count = 0, ans = Int32.MaxValue;
+        for(int i = 0; i < n - k + 1; i++)
+        {
+            count = 0;
+            for(int j = i; j < i + k; j++)
+            {
+                if(blocks[j] == 'W')
+                    count++;
+            }
+            ans = Math.Min(ans, count);
+        }
+        return ans;
+    }
+}
+
+Approach 2
+------------
+
+// Efficient solution using sliding window T.C = O(N)
+
+public class Solution {
+    public int MinimumRecolors(string blocks, int k) {
+        int n = blocks.Length;
+        int count = 0, back = 0, ans = Int32.MaxValue;
+        for(int front = 0; front < n; front++)
+        {
+            if(blocks[front] == 'W')
+                count++;
+            if(front - back + 1 >= k)
+            {
+                ans = Math.Min(ans, count);
+                if(blocks[back] == 'W')
+                    count--;
+                back++;
+            }
+        }
+        return ans;
+    }
+}
