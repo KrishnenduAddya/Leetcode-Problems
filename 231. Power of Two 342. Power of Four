@@ -1,0 +1,28 @@
+//Power of Two
+
+public class Solution {
+    public bool IsPowerOfTwo(int n) {
+        if (n == 0)
+            return false;
+    
+        while (n % 2 == 0) {
+            n = n / 2; 
+        }
+        return n == 1;
+    }
+}
+
+
+// Power of Four
+
+public class Solution {
+    public bool IsPowerOfFour(int n) {
+        if (n == 0)
+            return false;
+    
+        while (n % 4 == 0) {
+            n = n / 4; 
+        }
+        return n == 1;
+    }
+}
