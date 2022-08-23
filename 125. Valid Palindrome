@@ -1,0 +1,51 @@
+1st Approach
+-------------
+
+using System.Text.RegularExpressions;
+public class Solution {
+    public bool IsPalindrome(string s) {
+        s = Regex.Replace(s, "[^a-zA-Z0-9]", ""); // Replace non-alphanumeric characters with empty, i.e. remove them
+        s = s.ToLower();
+        
+        int low = 0, high = s.Length - 1;
+        while(low < high)
+        {
+            if(s[low] != s[high])
+                return false;
+            low++;
+            high--;
+            
+        }
+        return true;;
+    }
+}
+
+2nd Approach
+-------------
+
+public class Solution {
+    public bool IsPalindrome(string s) {
+        s = s.ToLower();
+        int low = 0, high = s.Length - 1;
+        while(low < high)
+        {
+            if(!(s[low] >= 'a' && s[low] <= 'z' || s[low] >= 48 && s[low] <= 57))
+            {
+                low++;
+                continue;
+            } 
+            if(!(s[high] >= 'a' && s[high] <= 'z' || s[high] >= 48 && s[high] <= 57))
+            {
+                high--;
+                continue;
+            } 
+            if(s[low] != s[high])
+                return false;
+            low++;
+            high--;
+            
+        }
+        return true;;
+    }
+}
+
