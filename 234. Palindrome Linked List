@@ -1,0 +1,43 @@
+public class Solution {
+    public bool IsPalindrome(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode prev = head;
+        
+        // Find the middle point
+        while(fast != null && fast.next != null){
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        // Cut the list from middle
+        prev.next = null;
+        
+        // Reverse the 2nd part
+        slow = Reverse(slow);
+        
+        // Check the 1st and the reversed part
+        while(head != null && slow != null){
+            if(slow.val != head.val)
+                return false;
+            
+            slow = slow.next;
+            head = head.next;
+        }
+        return true;
+    }
+    
+    public ListNode Reverse(ListNode head){
+        ListNode curr = head;
+        ListNode prev = null;
+        
+        while(curr != null){
+            var next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}
