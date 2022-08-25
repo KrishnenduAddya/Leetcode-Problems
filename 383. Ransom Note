@@ -1,0 +1,15 @@
+public class Solution {
+    public bool CanConstruct(string ransomNote, string magazine) {
+        int[] mArray = new int[26];
+        foreach(char m in magazine)
+            mArray[m - 'a']++;
+        foreach(char r in ransomNote)
+        {
+            if(mArray[r - 'a'] == 0)
+                return false;
+            else
+                mArray[r - 'a']--;
+        }  
+        return true;
+    }
+}
