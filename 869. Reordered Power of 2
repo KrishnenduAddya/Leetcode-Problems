@@ -1,0 +1,45 @@
+1st Approach
+-------------
+
+public class Solution {
+    public bool ReorderedPowerOf2(int n) {
+        char[] a1 = n.ToString().ToCharArray();
+        Array.Sort(a1);
+        String s1 = new String(a1);
+        
+        for (int i = 0; i < 31; i++) 
+        {
+            char[] a2 = (1 << i).ToString().ToCharArray();
+            Array.Sort(a2);
+            String s2 = new String(a2);
+            if (s1.Equals(s2)) 
+                return true;
+        }
+        return false;
+    }
+}
+
+2nd Approach
+-------------
+
+public class Solution {
+    public bool ReorderedPowerOf2(int n) {
+        int c = Counter(n);
+        for (int i = 0; i < 32; i++)
+        {
+            if (Counter(1 << i) == c) 
+                return true;
+        }
+        return false;
+    }
+    public int Counter(int n) 
+    {
+        int res = 0;
+        while(n > 0)
+        {
+            res = res + (int)Math.Pow(10, n % 10);
+            n = n / 10;
+        }
+        return res;
+    }
+}
