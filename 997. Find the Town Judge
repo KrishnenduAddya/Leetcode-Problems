@@ -1,0 +1,45 @@
+Approach 1
+-----------
+
+public class Solution {
+    public int FindJudge(int n, int[][] trust) {
+        //Count Array of Pair(Trust by, Trust to)
+        int[, ] count = new int[n + 1, 2];
+        
+        foreach(var t in trust)
+        {
+            count[t[0], 0]++;
+            count[t[1], 1]++;
+        }
+        for(int i = 1; i <= n; i++)
+        {
+            if(count[i, 0] == 0 && count[i, 1] == n - 1)
+                return i;
+        }
+        return -1;
+    }
+}
+
+Approach 2
+-----------
+
+Consider trust as a graph, all pairs are directed edge.
+The point with in-degree - out-degree = N - 1 become the judge.
+
+public class Solution {
+    public int FindJudge(int n, int[][] trust) {
+        int[] count = new int[n + 1];
+        
+        foreach(var t in trust)
+        {
+            count[t[0]]--;
+            count[t[1]]++;
+        }
+        for(int i = 1; i <= n; i++)
+        {
+            if(count[i] == n - 1)
+                return i;
+        }
+        return -1;
+    }
+}
