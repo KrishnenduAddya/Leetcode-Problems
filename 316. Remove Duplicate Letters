@@ -1,0 +1,31 @@
+// Inceasing order + Frequency + Visited
+
+public class Solution {
+    public string RemoveDuplicateLetters(string s) {
+        int[] count = new int[26];
+        foreach(char ch in s)
+            count[ch - 'a']++;
+        StringBuilder sb = new StringBuilder();
+        bool[] visited = new bool[26];
+        foreach(char ch in s)
+        {
+            if(visited[ch - 'a'])
+            {
+                count[ch - 'a']--;
+                continue;
+            }
+            int len = sb.Length;
+            while(len > 0 && sb[len - 1] > ch && count[sb[len - 1] - 'a'] > 0)
+            {
+                visited[sb[len - 1] - 'a'] = false;
+                sb.Remove(len - 1, 1);
+                len = sb.Length;
+            }
+            sb.Append(ch);
+            visited[ch - 'a'] = true;
+            count[ch - 'a']--;
+        }
+        
+        return sb.ToString();
+    }
+}
