@@ -3,12 +3,11 @@ public class Solution {
 
     public int NumIslands(char[][] grid) {
         int count = 0;
-        n = grid.Length;
-        if (n == 0) return 0;
-        m = grid[0].Length;
-        for (int i = 0; i < n; i++)
+        m = grid.Length;
+        n = grid[0].Length;
+        for (int i = 0; i < m; i++)
         {
-            for (int j = 0; j < m; j++)
+            for (int j = 0; j < n; j++)
             {
                 if (grid[i][j] == '1')
                 {
@@ -22,7 +21,7 @@ public class Solution {
 
     private void MarkVisited(char[][] grid, int i, int j)
     {
-        if (i < 0 || j < 0 || i >= n || j >= m || grid[i][j] != '1')
+        if (i < 0 || j < 0 || i >= m || j >= n || grid[i][j] != '1')
             return;
         grid[i][j] = '2';
         MarkVisited(grid, i + 1, j);
