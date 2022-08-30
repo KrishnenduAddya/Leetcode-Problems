@@ -1,0 +1,45 @@
+Basic Approach
+---------------
+
+ublic class Solution {
+    public int SubarraySum(int[] nums, int k) {
+        int n = nums.Length;
+        int count = 0;
+        for(int i = 0; i < n; i++)
+        {
+            int sum = 0;
+            for(int j = i; j < n; j++)
+            {
+                sum = sum + nums[j];
+                if(sum == k)
+                    count++;
+            }
+        }
+        return count;
+    }
+}
+
+Efficient Approach
+-------------------
+
+public int SubarraySum(int[] nums, int k) {
+        int n = nums.Length; 
+        int currSum = 0, count = 0;
+        Dictionary<int,int> map = new Dictionary<int,int>();
+        for(int i = 0; i < n; i++)
+        {
+            currSum = currSum + nums[i]; 
+            if(currSum == k)
+                count++;
+            if(map.ContainsKey(currSum - k)) 
+                count = count + map[currSum - k]; 
+             
+            if(map.ContainsKey(currSum)) 
+                map[currSum]++;
+            else
+                map.Add(currSum, 1);
+            
+        }
+        return count;
+    }
+}
