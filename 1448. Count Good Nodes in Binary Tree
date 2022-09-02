@@ -1,0 +1,23 @@
+public class Solution {
+    int goodNode = 0;
+    public int GoodNodes(TreeNode root) {
+        if(root == null)
+            return 0;
+        Traverse(root, int.MinValue);
+        return goodNode;
+    }
+    
+    private void Traverse(TreeNode root, int max)
+    {
+        if(root != null)
+        {
+            if(root.val >= max)
+            {
+                max = root.val;
+                goodNode++;
+            }
+            Traverse(root.left, max);
+            Traverse(root.right, max);
+        }
+    }
+}
