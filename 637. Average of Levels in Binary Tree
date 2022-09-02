@@ -1,0 +1,22 @@
+public class Solution {
+    public IList<double> AverageOfLevels(TreeNode root) {
+        // Traverse each level by BFS and fill averages
+        List<double> averages = new List<double>();
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        
+        queue.Enqueue(root);
+        while(queue.Count > 0)
+        {
+            int count = queue.Count;
+            double sum = 0.0;
+            for(int i = 0; i < count; i++)
+            {
+                if(queue.Peek().left != null) queue.Enqueue(queue.Peek().left);
+                if(queue.Peek().right != null) queue.Enqueue(queue.Peek().right);
+                sum = sum + queue.Dequeue().val;
+            }
+            averages.Add(sum / count);
+        }
+        return averages;
+    }
+}
