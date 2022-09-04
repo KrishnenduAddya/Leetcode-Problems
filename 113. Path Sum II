@@ -1,0 +1,23 @@
+public class Solution {
+    public IList<IList<int>> PathSum(TreeNode root, int targetSum) {
+        IList<IList<int>> result = new List<IList<int>>();
+        FindList(root, targetSum, result, new List<int>());
+        return result;
+    }
+    
+    private void FindList(TreeNode root, int targetSum, IList<IList<int>> result, List<int> tempList)
+    {
+        if(root == null) 
+            return;
+        tempList.Add(root.val);
+        if(root.left == null && root.right == null && targetSum - root.val == 0) 
+        {
+            result.Add(new List<int>(tempList));
+            tempList.RemoveAt(tempList.Count - 1);
+            return;
+        }
+        FindList(root.left, targetSum - root.val, result, tempList);
+        FindList(root.right, targetSum - root.val, result, tempList);
+        tempList.RemoveAt(tempList.Count - 1);
+    }
+}
