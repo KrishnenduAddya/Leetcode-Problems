@@ -1,0 +1,14 @@
+public class Solution {
+    public int SumNumbers(TreeNode root) {
+        return FindSum(root, 0);
+    }
+    
+    private int FindSum(TreeNode root, int sum)
+    {
+        if(root == null)
+            return 0;
+        if(root.left == null && root.right == null)
+            return sum * 10 + root.val;
+        return FindSum(root.left, sum * 10 + root.val) + FindSum(root.right, sum * 10 + root.val);
+    }
+}
