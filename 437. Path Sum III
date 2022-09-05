@@ -1,0 +1,14 @@
+public class Solution {
+    public int PathSum(TreeNode root, int targetSum) {
+        if (root == null) 
+            return 0;
+        return FindPath(root, targetSum) + PathSum(root.left, targetSum) + PathSum(root.right, targetSum);
+    }
+    
+    private int FindPath(TreeNode root, long targetSum) {
+        if (root == null) 
+            return 0;
+        return (root.val - targetSum == 0 ? 1 : 0) 
+            + FindPath(root.left, targetSum - root.val) + FindPath(root.right, targetSum - root.val);
+    }
+}
