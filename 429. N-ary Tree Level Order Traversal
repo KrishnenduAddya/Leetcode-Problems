@@ -1,0 +1,29 @@
+public class Solution {
+    public IList<IList<int>> LevelOrder(Node root) {
+        Queue<Node> queue = new Queue<Node>();
+        IList<IList<int>> result = new List<IList<int>>(); 
+        
+        if(root == null) 
+            return result;
+        
+        queue.Enqueue(root);
+        while(queue.Count > 0)
+        {
+            int level = queue.Count;
+            List<int> list = new List<int>(); 
+            for(int i = 0; i < level; i++)
+            {
+                Node node = queue.Dequeue();
+                list.Add(node.val);
+                IList<Node> children = node.children;
+                if (children != null && children.Count > 0) {
+                    int count = children.Count;
+                    for (int j = 0; j < count; j++)
+                        queue.Enqueue(children[j]);
+                }
+            }
+            result.Add(list);
+        }
+        return result;
+    }
+}
