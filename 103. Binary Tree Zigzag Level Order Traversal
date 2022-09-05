@@ -1,0 +1,30 @@
+public class Solution {
+    public IList<IList<int>> ZigzagLevelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        IList<IList<int>> result = new List<IList<int>>(); 
+        
+        if(root == null) 
+            return result;
+        
+        queue.Enqueue(root);
+        bool zigzag = false;
+        while(queue.Count > 0)
+        {
+            int count = queue.Count;
+            List<int> list = new List<int>(); 
+            for(int i = 0; i < count; i++)
+            {
+                TreeNode node = queue.Dequeue();
+                if(zigzag)
+                    list.Insert(0, node.val);
+                else
+                    list.Add(node.val);
+                if(node.left != null) queue.Enqueue(node.left);
+                if(node.right != null) queue.Enqueue(node.right);
+            }
+            result.Add(list);
+            zigzag = !zigzag;
+        }
+        return result; 
+    }
+}
