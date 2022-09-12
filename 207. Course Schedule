@@ -1,0 +1,35 @@
+public class Solution {
+    public bool CanFinish(int numCourses, int[][] prerequisites) {
+        if(prerequisites == null || prerequisites.Length == 0)
+            return true;
+
+        int[] inDegree = new int[numCourses];
+        // 1. Setup indgree count
+        foreach(int[] edge in prerequisites)
+            inDegree[edge[0]]++;
+
+        Queue<int> queue = new Queue<int>();
+        // 2. Start from node with 0 indgree, i.e. no prerquisites for this course
+        for(int i = 0; i < inDegree.Length; i++) {
+            if(inDegree[i] == 0) 
+                queue.Enqueue(i);
+        }
+
+        List<int> result = new List<int>();
+        while(queue.Count > 0)
+        {
+            int currentCourse = queue.Dequeue();
+            result.Add(currentCourse);
+
+            foreach(int[] edge in prerequisites) {
+                if(edge[1] == currentCourse) { // if a course to be completed before current course
+                    inDegree[edge[0]]--; // indegree decreases by 1, since current course is taken, and fulfill course edge[0]
+                    if(inDegree[edge[0]] == 0) 
+                        queue.Enqueue(edge[0]);
+                }
+            }
+        }
+
+        return result.Count == numCourses;
+    }
+}
