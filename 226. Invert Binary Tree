@@ -1,3 +1,5 @@
+// Recursive
+
 public class Solution {
     public TreeNode InvertTree(TreeNode root) {
         if (root == null)
@@ -11,6 +13,34 @@ public class Solution {
         InvertTree(root.left);
         InvertTree(root.right);
 
+        return root;
+    }
+}
+
+// Iterative
+
+public class Solution {
+    public TreeNode InvertTree(TreeNode root) {
+        if(root == null)
+            return root;
+
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.Push(root);
+
+        while (stack.Count > 0)
+        {
+            TreeNode current = stack.Pop();
+            if (current.left != null)
+                stack.Push(current.left);
+
+            if (current.right != null)
+                stack.Push(current.right);
+                
+            // Swap
+            TreeNode temp = current.left;
+            current.left = current.right;
+            current.right = temp;
+        }
         return root;
     }
 }
