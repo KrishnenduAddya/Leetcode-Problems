@@ -1,0 +1,24 @@
+public class Solution {
+    public int FindLongestChain(int[][] pairs) {
+        Array.Sort(pairs, (a,b) => a[0].CompareTo(b[0]));
+        
+        int prev = 0;
+        int count = 1;
+        for(int curr = 1; curr < pairs.Length; curr++)
+        {
+            // Current pair 1st value <= previous pair 2nd value
+            if(pairs[curr][0] <= pairs[prev][1])
+            {
+                // Current pair completely inside previous pair then count will from there
+                if(pairs[curr][1] < pairs[prev][1])
+                     prev = curr;
+            }
+            else
+            {
+                prev = curr;
+                count++;
+            }
+         }
+         return count;
+    }
+}
