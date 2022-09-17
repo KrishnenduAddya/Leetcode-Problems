@@ -1,0 +1,131 @@
+Basic Approach TLE
+-------------------
+
+public class Solution {
+    public IList<IList<int>> PalindromePairs(string[] words) {
+        IList<IList<int>> result = new List<IList<int>>();
+        
+        int n = words.Length;
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(i != j)
+                {
+                    string temp = words[i] + words[j];
+                    int l = temp.Length, palindrome = 1;
+                    for(int k = 0; k < l / 2; k++)
+                    {
+                        if(temp[k] != temp[l - k - 1])
+                        {
+                            palindrome = 0;
+                            break;
+                        }
+                    }
+                    if(palindrome == 1)
+                        result.Add(new List<int>{i,j});
+                }
+            }
+        }
+        return result;
+    }
+}
+
+
+Efficient Approach
+-------------------
+public class Solution {
+    public IList<IList<int>> PalindromePairs(string[] words) {
+        IList<IList<int>> result = new List<IList<int>>();
+        
+        int n = words.Length;
+        Dictionary<string, int> map = new Dictionary<string, int>();
+        for(int i = 0; i < n; i++)
+            map.Add(words[i], i);
+        
+        //Case 1. Special Case : "" can be combine with any palindrome string
+        if(map.ContainsKey(""))
+        {
+            int blankIdx = map[""];
+            for(int i = 0; i < n; i++)
+            {
+                if(IsPalindrome(words[i]))
+                {
+                    if(i == blankIdx)
+                        continue;
+                    result.Add(new List<int>{blankIdx, i});
+                    result.Add(new List<int>{i, blankIdx});
+                }
+            }
+        }
+    
+        //Case 2. Find all string and reverse string pairs
+        for(int i = 0; i < n; i++)
+        {
+            string reverse = ReverseStr(words[i]);
+            if(map.ContainsKey(reverse))
+            {
+                int revIdx = map[reverse];
+                if(revIdx == i) 
+                    continue;
+                result.Add(new List<int>{i, revIdx});
+            }
+        }
+    
+        // Find the pair s1, s2 that 
+        // Case 3 : s1[0:cut] is palindrome and s1[cut+1:] = reverse(s2) => (s2, s1)
+        // Case 4 : s1[cut+1:] is palindrome and s1[0:cut] = reverse(s2) => (s1, s2)
+        
+        for(int i = 0; i < n; i++)
+        {
+            string str = words[i];
+            for(int cut = 1; cut < str.Length; cut++)
+            {
+                // Left
+                if(IsPalindrome(str.Substring(0, cut)))
+                {
+                    string rev = ReverseStr(str.Substring(cut));
+                    if(map.ContainsKey(rev))
+                    {
+                        int revIdx = map[rev];
+                        if(revIdx == i) 
+                            continue;
+                        result.Add(new List<int>{revIdx, i});
+                    }
+                }
+                
+                // Right
+                if(IsPalindrome(str.Substring(cut)))
+                {
+                    string rev = ReverseStr(str.Substring(0, cut));
+                    if(map.ContainsKey(rev))
+                    {
+                        int revIdx = map[rev];
+                        if(revIdx == i) 
+                            continue;
+                        result.Add(new List<int>{i, revIdx});
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private string ReverseStr(string str)
+    {
+        char[] charArray = str.ToCharArray();
+        Array.Reverse(charArray);
+        return new String(charArray);
+    }
+    
+    private bool IsPalindrome(string str)
+    {
+        int n = str.Length;
+        for(int i = 0; i < n / 2; i++)
+        {
+            if(str[i] != str[n - i - 1])
+                return false;
+        }
+        return true;
+    }
+}
