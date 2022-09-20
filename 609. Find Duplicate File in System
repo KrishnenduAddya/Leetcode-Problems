@@ -1,0 +1,37 @@
+public class Solution {
+    public IList<IList<string>> FindDuplicate(string[] paths) {
+        IList<IList<string>> result = new List<IList<string>>();
+        Dictionary<string, List<string>> map = new Dictionary<string, List<string>>(); 
+
+        foreach(string path in paths)
+        {
+            string[] array = path.Split(" ");
+            string directory = array[0];
+            int length = array.Length;
+            for (int i = 1; i < length; i++)
+            {
+                string fileNameContent = array[i];
+                int leftParenthesisIndex = fileNameContent.IndexOf('(');
+                string fileName = fileNameContent.Substring(0, leftParenthesisIndex);
+                string content = fileNameContent.Substring(leftParenthesisIndex);
+                content = content.Substring(1, content.Length - 1);
+                
+                List<string> filesList = map.ContainsKey(content) ? map[content] : new List<string>();
+                filesList.Add(directory + "/" + fileName);
+                
+                if(map.ContainsKey(content))
+                    map[content] =  filesList;
+                else
+                    map.Add(content, filesList);
+            }
+        }
+
+        foreach(var item in map)
+        {
+            if (item.Value.Count > 1)
+                result.Add(item.Value);
+        }
+
+        return result;
+    }
+}
