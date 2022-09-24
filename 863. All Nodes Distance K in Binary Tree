@@ -1,0 +1,80 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public IList<int> DistanceK(TreeNode root, TreeNode target, int k) {
+        Dictionary<TreeNode, TreeNode> parentTrack = new Dictionary<TreeNode, TreeNode>();
+        
+        // Step 1. First BFS traversal to mark parents
+        MarkParents(root, parentTrack); 
+        
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        HashSet<TreeNode> visited = new HashSet<TreeNode>();
+        
+        queue.Enqueue(target);
+        visited.Add(target);
+        int currDistance = 0;
+        
+        // Step 2. Second BFS traversal to go upto k distance from target node
+        while(queue.Count > 0)
+        {
+            int count = queue.Count;
+            if(currDistance == k) 
+                break;
+            currDistance++;
+            for(int i = 0; i < count; i++)
+            {
+                TreeNode current = queue.Dequeue(); 
+                if(current.left != null && !visited.Contains(current.left)) 
+                {
+                    queue.Enqueue(current.left);
+                    visited.Add(current.left);
+                }
+                if(current.right != null && !visited.Contains(current.right))
+                {
+                    queue.Enqueue(current.right);
+                    visited.Add(current.right);
+                }
+                if(parentTrack.ContainsKey(current) && !visited.Contains(parentTrack[current]))
+                {
+                    queue.Enqueue(parentTrack[current]);
+                    visited.Add(parentTrack[current]);
+                }
+            }
+        }
+        
+        List<int> result = new List<int>(); 
+        while(queue.Count > 0)
+        {
+            TreeNode current = queue.Dequeue(); 
+            result.Add(current.val);
+        }
+        return result;
+    }
+    
+    private void MarkParents(TreeNode root, Dictionary<TreeNode, TreeNode> parentTrack)
+    {
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        while(queue.Count > 0)
+        { 
+            TreeNode current = queue.Dequeue(); 
+            if(current.left != null) 
+            {
+                parentTrack.Add(current.left, current);
+                queue.Enqueue(current.left);
+            }
+            if(current.right != null)
+            {
+                parentTrack.Add(current.right, current);
+                queue.Enqueue(current.right);
+            }
+        }
+    }
+}
