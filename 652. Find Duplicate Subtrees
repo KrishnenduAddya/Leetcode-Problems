@@ -1,0 +1,28 @@
+public class Solution {
+    List<TreeNode> result = new List<TreeNode>();
+    Dictionary<string, int> counter = new Dictionary<string, int>();
+    public IList<TreeNode> FindDuplicateSubtrees(TreeNode root) {
+        PostOrderTraverse(root);
+        return result;
+    }
+    
+    private string PostOrderTraverse(TreeNode root) 
+    {
+        if (root == null)
+            return "x";
+            
+        string left = PostOrderTraverse(root.left);
+        string right = PostOrderTraverse(root.right);
+        string key = left + "," + right + "," + root.val;
+        
+        if(counter.ContainsKey(key))
+            counter[key]++;
+        else
+            counter.Add(key, 1);
+        
+        if (counter[key] == 2)
+            result.Add(root);
+        
+        return key;
+    }
+}
