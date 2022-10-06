@@ -1,0 +1,39 @@
+public class TimeMap {
+    Dictionary<string, SortedList<int, string>> map;
+    public TimeMap() {
+        map = new Dictionary<string, SortedList<int, string>>();
+    }
+    
+    public void Set(string key, string value, int timestamp) {
+        if (!map.ContainsKey(key))
+            map.Add(key, new SortedList<int, string>());
+
+        SortedList<int, string> temp = map[key];
+        temp.Add(timestamp, value);
+    }
+    
+    public string Get(string key, int timestamp) {
+        if (!map.ContainsKey(key))
+            return string.Empty;
+
+        IList<int> temp = map[key].Keys;
+        int left = 0;
+        int right = temp.Count - 1;
+        string ans = string.Empty;
+        
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+            if (temp[mid] == timestamp)
+                return map[key].Values[mid];
+            else if (temp[mid] < timestamp)
+            {
+                ans = map[key].Values[mid];
+                left = mid + 1;
+            }
+            else
+                right = mid - 1; 
+        }
+        return ans;
+    }
+}
