@@ -1,3 +1,6 @@
+Using DLL
+----------
+
 public class Node
 {
     public string url;
@@ -32,5 +35,44 @@ public class BrowserHistory {
         while (curr.next != null && steps-- > 0)
             curr = curr.next;
         return curr.url;
+    }
+}
+
+
+Using Stack
+------------
+
+public class BrowserHistory {
+    Stack<String> backward = new Stack<String>();
+    Stack<String> forward = new Stack<String>();
+    
+    public BrowserHistory(string homepage) {
+        backward.Push(homepage);
+        forward = new Stack<String>();
+    }
+    
+    public void Visit(string url) {
+        backward.Push(url);
+        forward = new Stack<String>(); 
+    }
+    
+    public string Back(int steps) {
+        while(steps > 0 && backward.Count > 1) 
+        {
+            forward.Push(backward.Peek());
+            backward.Pop();
+            steps--;
+        }
+        return backward.Peek();
+    }
+    
+    public string Forward(int steps) {
+        while(steps > 0 && forward.Count > 0) 
+        {
+            backward.Push(forward.Peek());
+            forward.Pop();
+            steps--;
+        }
+        return backward.Peek();
     }
 }
