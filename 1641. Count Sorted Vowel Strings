@@ -1,0 +1,19 @@
+public class Solution {
+    public int CountVowelStrings(int n) {
+        int[] dp = new int[5];
+        for(int i = 0; i < 5; i++)
+            dp[i] = 1;
+        
+        int result = 0;
+        for(int i = 2; i <= n; i++)
+        {
+            for(int j = 3; j >= 0; j--)
+                dp[j] = dp[j] + dp[j + 1];
+        }
+        
+        foreach(int num in dp) 
+            result = result + num;
+        
+        return result;
+    }
+}
