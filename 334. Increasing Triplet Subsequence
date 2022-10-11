@@ -1,0 +1,19 @@
+public class Solution {
+    public bool IncreasingTriplet(int[] nums) {
+        int n = nums.Length;
+        if(n < 3)
+            return false;
+        
+        int ith = Int32.MaxValue, jth = Int32.MaxValue;
+        for(int i = 0; i < n; i++)
+        {
+            if(nums[i] <= ith)
+                ith = nums[i];
+            else if(nums[i] <= jth)
+                jth = nums[i];
+            else
+                return true;
+        }
+        return false;
+    }
+}
