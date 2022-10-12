@@ -1,0 +1,17 @@
+public class Solution {
+    public int LargestPerimeter(int[] nums) {
+        int n = nums.Length;
+        Array.Sort(nums);
+        
+        for(int i = n - 3; i >= 0; i--)
+        {
+            // To form a triangle
+            // a + b > c, b + c > a, a + c > b means sum of any two sides
+            // is greater than the 3rd side, as here the sides are sorted
+            // if a < b < c, only a + b > c satisfies the other two conditions
+            if(nums[i] + nums[i + 1] > nums[i + 2])
+                return nums[i] + nums[i + 1] + nums[i + 2];
+        }
+        return 0;
+    }
+}
