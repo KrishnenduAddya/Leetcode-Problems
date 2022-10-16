@@ -1,0 +1,18 @@
+public class Solution {
+    public int ShortestSubarray(int[] nums, int k) {
+        int min = Int32.MaxValue;
+        int n = nums.Length;
+        
+        int start = 0, end = 0, sum = 0;
+        while(end < n)
+        {
+            sum = sum + nums[end++]; // Include elements one by one to right
+            while (sum >= k) //When sum >= target for a subarray, store the minimum length and try to eliminate elements from left and check for same
+            {
+                min = Math.Min(min, end - start);
+                sum = sum - nums[start++];
+            }
+        }
+        return min == Int32.MaxValue ? -1 : min;
+    }
+}
