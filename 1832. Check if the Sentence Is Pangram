@@ -1,0 +1,48 @@
+Approach 1
+-----------
+
+public class Solution {
+    public bool CheckIfPangram(string sentence) {
+        int[] freq = new int[26];
+        
+        foreach(char ch in sentence)
+            freq[ch - 'a']++;
+        
+        foreach(int n in freq)
+        {
+            if(n < 1)
+                return false;
+        }
+        return true;
+    }
+}
+
+Approach 2
+-----------
+
+public class Solution {
+    public bool CheckIfPangram(string sentence) {
+        HashSet<char> mySet = new HashSet<char>();
+        
+        foreach(char ch in sentence)
+            mySet.Add(ch);
+        
+        return mySet.Count == 26;
+    }
+}
+
+Approach 3
+-----------
+
+public class Solution {
+    public bool CheckIfPangram(string sentence) {
+        string pangram = "abcdefghijklmnopqrstuvwxyz";
+        
+        foreach(char ch in pangram)
+        {
+            if(sentence.IndexOf(ch) == -1)
+                return false;
+        }
+        return true;
+    }
+}
