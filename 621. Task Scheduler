@@ -1,0 +1,18 @@
+public class Solution {
+    public int LeastInterval(char[] tasks, int n) {
+        int len = tasks.Length;
+        int[] freq = new int[26];
+        
+        foreach(char task in tasks)
+            freq[task - 'A']++;
+        
+        Array.Sort(freq);
+        int chunk = freq[25] - 1;
+        int idle = chunk * n;
+        
+        for(int i = 24; i >= 0; i--)
+            idle = idle - Math.Min(chunk, freq[i]);
+        
+        return idle < 0 ? len : len + idle;
+    }
+}
