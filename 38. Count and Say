@@ -1,0 +1,33 @@
+public class Solution {
+    public string CountAndSay(int n) {
+        // 1
+        // 11
+        // 21
+        // 1211
+        // 111221
+        
+        string result = "1";
+        for(int i = 1; i < n; i ++)
+            result = PrepareCount(result);
+        return result;
+    }
+    
+    private string PrepareCount(string result)
+    {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while(i < result.Length)
+        {
+            char val = result[i];
+            int count = 0;
+            while(i < result.Length &&  result[i] == val)
+            {
+                i++;
+                count++;
+            }
+            sb.Append(count);
+            sb.Append(val);
+        }
+        return sb.ToString();
+    }
+}
