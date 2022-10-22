@@ -1,0 +1,23 @@
+public class Solution {
+    public string ReverseOnlyLetters(string s) {
+        char[] charArray = s.ToCharArray();
+        int start = 0, end = s.Length - 1;
+        
+        while (start < end)
+        {
+            while (start < end && !Char.IsLetter(charArray[start]))
+                start++;
+            
+           while (start < end && !Char.IsLetter(charArray[end]))
+                end--;
+            
+            char temp = charArray[start];
+            charArray[start] = charArray[end];
+            charArray[end] = temp;
+            start++;
+            end--;
+        }
+        
+        return new string(charArray);
+    }
+}
