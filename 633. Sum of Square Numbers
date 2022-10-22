@@ -1,0 +1,16 @@
+public class Solution {
+    public bool JudgeSquareSum(int c) {
+        long start = 0, end = (long)Math.Sqrt(c);;
+        while(start <= end)
+        {
+            long square = start * start + end * end;
+            if(square == c)
+                return true;
+            else if(square < c)
+                start++;
+            else
+                end--;
+        }
+        return false;
+    }
+}
