@@ -1,0 +1,34 @@
+public class Solution {
+    public string MinWindow(string s, string t) {
+        int[] freq = new int[128];
+        foreach(char ch in t)
+            freq[ch]++;
+        
+        int left = 0, right = 0, minLeft = 0, minLen = int.MaxValue, counter = t.Length;
+        int n = s.Length;
+        
+        while(right < n)
+        {
+            char rights = s[right];
+            if(freq[rights] > 0)
+                counter--;
+            freq[rights]--;
+            right++;
+            
+            while(counter == 0)
+            {
+                if((right - left) < minLen)
+                {
+                    minLen = right - left;
+                    minLeft = left;
+                }
+                char lefts = s[left];
+                freq[lefts]++;
+                if(freq[lefts] > 0)
+                    counter++;
+                left++;
+            }
+        }
+        return minLen == int.MaxValue ? "" : s.Substring(minLeft, minLen);
+    }
+}
