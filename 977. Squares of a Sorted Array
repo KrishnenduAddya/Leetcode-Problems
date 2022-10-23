@@ -1,0 +1,22 @@
+public class Solution {
+    public int[] SortedSquares(int[] nums) {
+        int n = nums.Length;
+        int left = 0, right = n - 1, index = n - 1;
+        int[] result = new int[n];
+        while(left <= right)
+        {
+            if(Math.Abs(nums[left]) > Math.Abs(nums[right]))
+            {
+                result[index] = nums[left] * nums[left];
+                left++;
+            } 
+            else
+            {
+                result[index] = nums[right] * nums[right];
+                right--;
+            }
+            index--;
+        }
+        return result;
+    }
+}
