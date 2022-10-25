@@ -1,0 +1,55 @@
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public string serialize(TreeNode root) {
+        if(root == null) 
+            return "";
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        StringBuilder sb = new StringBuilder();
+        
+        queue.Enqueue(root);
+        while(queue.Count > 0)
+        {
+            TreeNode node = queue.Dequeue();
+            if(node == null)
+            {
+                sb.Append("# ");
+                continue;
+            }
+            sb.Append(node.val + " ");
+            queue.Enqueue(node.left);
+            queue.Enqueue(node.right);
+        }
+        return sb.ToString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(string data) {
+        if(data == "") 
+            return null;
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        string[] values = data.Split(' ');
+        int n = values.Length;
+        TreeNode root = new TreeNode(Convert.ToInt32(values[0]));
+        queue.Enqueue(root);
+        
+        int i = 0;
+        while(queue.Count > 0)
+        {
+            TreeNode parent = queue.Dequeue();
+            if (!values[++i].Equals("#")) 
+            {
+                TreeNode left = new TreeNode(Convert.ToInt32(values[i]));
+                parent.left = left;
+                queue.Enqueue(left);
+            }
+            if (!values[++i].Equals("#"))
+            {
+                TreeNode right = new TreeNode(Convert.ToInt32(values[i]));
+                parent.right = right;
+                queue.Enqueue(right);
+            }
+        }
+        return root;
+    }
+}
