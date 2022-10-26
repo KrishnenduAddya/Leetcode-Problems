@@ -1,0 +1,22 @@
+public class Solution {
+    public bool CheckSubarraySum(int[] nums, int k) {
+        //The main idea is (x + n*k) % k = x where x is the remainder which can be 0,1,...,k-1.
+        Dictionary<int, int> map = new Dictionary<int, int>();
+        int runningSum = 0;
+        for(int i = 0; i < nums.Length; i++)
+        {
+            runningSum = runningSum + nums[i];
+            int rem = runningSum % k;
+            if(rem == 0 && i > 0)
+                return true;
+            if(map.ContainsKey(rem))
+            {
+                if(i - map[rem] > 1)
+                    return true;
+            }
+            else
+                map.Add(rem, i);
+        }
+        return false;
+    }
+}
