@@ -1,0 +1,59 @@
+1st Approach
+--------------
+
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs) {
+        IList<IList<string>> result = new List<IList<string>>();
+        Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
+        
+        foreach(string str in strs)
+        {
+            char[] charArray = str.ToCharArray();
+            Array.Sort(charArray);
+            string strKey = new string(charArray);
+            
+            List<string> anaGroup;
+            if(dict.ContainsKey(strKey))
+                anaGroup = dict[strKey];
+            else
+                anaGroup = new List<string>();
+            anaGroup.Add(str);
+            dict[strKey] = anaGroup;
+        }
+        foreach(List<string> anaGroup in dict.Values)
+            result.Add(anaGroup);
+        return result;
+    }
+}
+
+2nd Approach
+---------------
+
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs) {
+        IList<IList<string>> result = new List<IList<string>>();
+        Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
+        foreach(string str in strs)
+        {
+            int[] count = new int[26];
+            for(int i = 0; i < str.Length; i++)
+                count[str[i] - 'a']++;
+            
+            StringBuilder sb  = new StringBuilder();
+            foreach(int i in count)
+                sb.Append(i+ " ");
+            
+            String format = sb.ToString();
+            List<string> anaGroup;
+            if(dict.ContainsKey(format))
+                anaGroup = dict[format];
+            else
+                anaGroup = new List<string>();
+            anaGroup.Add(str);
+            dict[format] = anaGroup;
+        }
+        foreach(List<string> anaGroup in dict.Values)
+            result.Add(anaGroup);
+        return result;
+    }
+}
