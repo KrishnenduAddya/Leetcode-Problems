@@ -1,0 +1,15 @@
+public class Solution {
+    public bool IsToeplitzMatrix(int[][] matrix) {
+        int m = matrix.Length;
+        int n = matrix[0].Length;
+        for (int r = 0; r < m; r++) 
+        {
+            for(int c = 0; c < n; c++)
+            {
+                if(r > 0 && c > 0 && matrix[r][c] != matrix[r - 1][c - 1])
+                    return false;
+            }
+        }
+        return true;
+    }
+}
