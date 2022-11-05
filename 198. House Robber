@@ -1,0 +1,20 @@
+public class Solution {
+    int[] dp;
+    public int Rob(int[] nums) {
+        dp = new int[nums.Length];
+        Array.Fill(dp, -1);
+        return RobFrom(nums, 0);
+    }
+    private int RobFrom(int[] nums, int currentIndex)
+    {
+        if(currentIndex >= nums.Length)
+            return 0;
+        if(dp[currentIndex] >= 0)
+            return dp[currentIndex];
+        
+        int robFromCurrentIndex = nums[currentIndex] + RobFrom(nums, currentIndex + 2);
+        int skipCurrentIndex = RobFrom(nums, currentIndex + 1);
+        
+        return dp[currentIndex] = Math.Max(robFromCurrentIndex, skipCurrentIndex);
+    }
+}
