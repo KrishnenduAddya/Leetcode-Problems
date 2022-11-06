@@ -1,0 +1,29 @@
+public class Solution {
+    public string ReverseVowels(string s) {
+        if(s == null || s.Length == 0) 
+            return s;
+        string vowels = "aeiouAEIOU";
+        char[] chars = s.ToCharArray();
+        int start = 0;
+        int end = s.Length - 1;
+        
+        while(start < end)
+        {
+            while(start < end && !vowels.Contains(chars[start])){
+                start++;
+            }
+
+            while(start < end && !vowels.Contains(chars[end])){
+                end--;
+            }
+
+            char temp = chars[start];
+            chars[start] = chars[end];
+            chars[end] = temp;
+
+            start++;
+            end--;
+        }
+        return new string(chars);
+    }
+}
