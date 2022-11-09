@@ -1,0 +1,19 @@
+public class StockSpanner {
+    Stack<(int,int)> stack;
+
+    public StockSpanner() {
+        stack = new Stack<(int,int)>();
+    }
+    
+    public int Next(int price) {
+        int span = 1;
+        while (stack.Count > 0 && price >= stack.Peek().Item1)
+        { 
+            // If the current price is greater than stack peek.
+            span = span + stack.Peek().Item2;
+            stack.Pop();
+        }
+        stack.Push((price, span));
+        return span;
+    }
+}
