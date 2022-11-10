@@ -1,0 +1,23 @@
+public class Solution {
+    public string RemoveDuplicates(string s, int k) {
+        Stack<int[]> Master = new Stack<int[]>();
+        foreach(char ch in s.ToCharArray())
+        {
+            if(Master.Count > 0 && Master.Peek()[0] == ch){
+                Master.Peek()[1]++;
+            }
+            else 
+                Master.Push(new int[]{ch, 1});
+            if(Master.Peek()[1] == k) 
+                Master.Pop();
+        }
+        StringBuilder sb = new StringBuilder();
+        while(Master.Count > 0)
+        {
+            int[] top = Master.Pop();
+            while(top[1]-- > 0)
+                sb.Append((char)top[0]);
+        }
+        return new string(sb.ToString().Reverse().ToArray());
+    }
+}
