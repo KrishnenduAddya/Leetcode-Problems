@@ -1,0 +1,19 @@
+public class Solution {
+    public string MakeGood(string s) {
+        int n = s.Length;
+        
+        StringBuilder sb = new StringBuilder();
+        sb.Append(s[0]);
+        
+        for(int i = 1; i < n; i++)
+        {
+            int len = sb.Length;
+            if(len > 0 && Math.Abs(sb[len - 1] - s[i]) == 32)
+                sb.Length--;
+            else
+                sb.Append(s[i]);
+        }
+        
+        return sb.ToString();
+    }
+}
