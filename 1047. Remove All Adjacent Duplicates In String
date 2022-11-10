@@ -1,0 +1,14 @@
+public class Solution {
+    public string RemoveDuplicates(string s) {
+        StringBuilder sb = new StringBuilder();
+        foreach(char ch in s)
+        {
+            int len = sb.Length;
+            if(len > 0 && sb[len - 1] == ch)
+                sb.Remove(len - 1, 1);
+            else
+                sb.Append(ch);
+        }
+        return sb.ToString();
+    }
+}
