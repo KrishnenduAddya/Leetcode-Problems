@@ -1,0 +1,17 @@
+public class Solution {
+    public int NumRescueBoats(int[] people, int limit) {
+        Array.Sort(people);
+        
+        int n = people.Length;
+        int start = 0, end = n - 1, count = 0;
+
+        while (start <= end) 
+        {
+            count++;
+            if (people[start] + people[end] <= limit)
+                start++;
+            end--;
+        }
+        return count;
+    }
+}
