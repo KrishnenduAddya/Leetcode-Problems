@@ -1,0 +1,31 @@
+//https://www.youtube.com/watch?v=rJ9NFK9s_mI
+
+public class Solution {
+    public bool IsValidSudoku(char[][] board) {
+        HashSet<string> recordSet = new HashSet<string>();
+        for(int i = 0; i < 9; i++)
+        {
+            for(int j = 0; j < 9; j++)
+            {
+                if(board[i][j] != '.')
+                {
+                    string rowInfo = "Row" + i + board[i][j];
+                    string colInfo = "Col" + j + board[i][j];
+                    string boxInfo = "Box" + (i / 3) * 3 + (j / 3) + board[i][j];
+                
+                    if(recordSet.Contains(rowInfo) || recordSet.Contains(colInfo) || recordSet.Contains(boxInfo))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        recordSet.Add(rowInfo);
+                        recordSet.Add(colInfo);
+                        recordSet.Add(boxInfo);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
