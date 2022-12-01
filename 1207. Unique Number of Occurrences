@@ -1,0 +1,21 @@
+public class Solution {
+    public bool UniqueOccurrences(int[] arr) {
+        Dictionary<int, int> map = new Dictionary<int, int>();
+        foreach(int num in arr)
+        {
+            if(map.ContainsKey(num))
+                map[num]++;
+            else
+                map.Add(num, 1);
+        }
+        
+        HashSet<int> mySet = new HashSet<int>();
+        foreach(var pair in map)
+        {
+            if(mySet.Contains(pair.Value))
+                return false;
+            mySet.Add(pair.Value);
+        }
+        return true;
+    }
+}
