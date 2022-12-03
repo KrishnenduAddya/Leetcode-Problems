@@ -1,0 +1,48 @@
+// Amazon Bloomberg Expedia Facebook Google LinkedIn Uber Yahoo
+
+public class Solution {
+    public string FrequencySort(string s) {
+        Dictionary<char, int> map = new Dictionary<char, int>();
+        foreach (char ch in s)  //1. Store the character and frequency pair in a map
+        {
+            if (map.ContainsKey(ch))
+                map[ch]++;
+            else
+                map.Add(ch, 1);
+        }
+        var sortedMap = map.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+        
+        StringBuilder result = new StringBuilder();
+        
+        foreach(var pair in sortedMap)
+        {
+            int count = pair.Value;
+            while(count-- > 0)
+                result.Append(pair.Key);
+        }
+        
+        //Indexes of bucket array represents the frequency of numbers, length is taken as +1 because array starts with 0 index and for worse case if only one number is present repeated times so that we can store its frequency in [length] index
+         //List<char>[] bucket = new List<char>[s.Length + 1]; 
+         //foreach (var item in map) //2. Store the character based on their frequency in bucket
+         //{
+         //    int frequency = item.Value;
+         //      if (bucket[frequency] == null)
+         //      {
+         //          bucket[frequency] = new List<char>();
+         //      }
+         //      bucket[frequency].Add(item.Key);
+         //}
+        
+//         for (int i = bucket.Length - 1; i >= 0; i--)
+//         {
+//             if (bucket[i] != null)
+//             {
+//                 foreach (char ch in bucket[i]) // 3. Traverse the frequency bucket from right side to find the k most frequent numbers as most frequent elemets reside from the end
+//                     for(int j = 0; j < map[ch]; j++)
+//                         result.Append(ch);
+//             }
+//         }
+        
+        return result.ToString();
+    }
+}
