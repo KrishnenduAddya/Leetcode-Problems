@@ -1,0 +1,19 @@
+public class Solution {
+    public ListNode OddEvenList(ListNode head) {
+        if(head != null)
+        {
+            ListNode oddNode = head;
+            ListNode evenNode = head.next;
+            ListNode evenNodeHead = evenNode;
+            while (evenNode != null && evenNode.next != null)
+            {
+                oddNode.next = oddNode.next.next;
+                evenNode.next = evenNode.next.next;
+                oddNode = oddNode.next;
+                evenNode = evenNode.next;
+            }
+            oddNode.next = evenNodeHead;
+        }
+        return head;
+    }
+}
