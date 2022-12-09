@@ -1,0 +1,22 @@
+public class Solution {
+    public bool LeafSimilar(TreeNode root1, TreeNode root2) {
+        List<int> leaves1 = new List<int>();
+        List<int> leaves2 = new List<int>();
+        
+        DFS(root1, leaves1);
+        DFS(root2, leaves2);
+        
+        return leaves1.SequenceEqual(leaves2);
+    }
+    
+    private void DFS(TreeNode root, List<int> leaves)
+    {
+        if(root != null)
+        {
+            if(root.left == null && root.right == null)
+                leaves.Add(root.val);
+            DFS(root.left, leaves);
+            DFS(root.right, leaves);
+        }
+    }
+}
