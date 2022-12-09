@@ -1,0 +1,13 @@
+public class Solution {
+    public int MaxAncestorDiff(TreeNode root) {
+        return DFS(root, root.val, root.val);
+    }
+
+    public int DFS(TreeNode root, int min, int max) {
+        if (root == null) 
+            return max - min;
+        min = Math.Min(min, root.val);
+        max = Math.Max(max, root.val);
+        return Math.Max(DFS(root.left, min, max), DFS(root.right, min, max));
+    }
+}
