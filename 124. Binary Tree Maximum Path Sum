@@ -1,0 +1,21 @@
+// Adobe Amazon AppDynamics Apple Baidu Bloomberg ByteDance Facebook Google Intuit Microsoft Twitter Uber Walmart Labs
+
+public class Solution {
+    int maxPathSum = int.MinValue;
+    public int MaxPathSum(TreeNode root) {
+        FindPathSum(root);
+        return maxPathSum;
+    }
+    
+    private int FindPathSum(TreeNode root)
+    {
+        if(root == null)
+            return 0;
+        
+        int leftSum = Math.Max(0, FindPathSum(root.left));
+        int rightSum = Math.Max(0, FindPathSum(root.right));
+        maxPathSum = Math.Max(maxPathSum, root.val + leftSum + rightSum);
+        
+        return root.val + Math.Max(leftSum, rightSum);
+    }
+}
