@@ -1,0 +1,26 @@
+// Amazon Google LinkedIn Microsoft Opendoor Pure Storage Uber Zillow
+
+public class Solution {
+    public int EvalRPN(string[] tokens) {
+        Stack<int> myStack = new Stack<int>();
+        foreach(string token in tokens) 
+        {
+            if(token == "+" || token == "-" || token == "*" || token == "/")
+            {
+                int b = myStack.Pop();
+                int a = myStack.Pop();
+                if(token == "+")
+                    myStack.Push(a + b);
+                else if(token == "-")
+                    myStack.Push(a - b);
+                else if(token == "*") 
+                    myStack.Push(a * b);
+                else if(token == "/") 
+                    myStack.Push(a / b);
+            }
+            else
+                myStack.Push(Int32.Parse(token));
+        }	
+        return myStack.Pop();
+    }
+}
