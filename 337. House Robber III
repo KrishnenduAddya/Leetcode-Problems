@@ -1,0 +1,28 @@
+// Amazon Facebook Google Uber
+
+public class Solution {
+    public int Rob(TreeNode root) {
+        return RobFrom(root, new Dictionary<TreeNode, int>());
+    }
+
+    private int RobFrom(TreeNode root, Dictionary<TreeNode, int> map) {
+        if (root == null) 
+            return 0;
+        if (map.ContainsKey(root)) 
+            return map[root];
+        
+        int sum = root.val;
+        
+        if (root.left != null)
+            sum += RobFrom(root.left.left, map) + RobFrom(root.left.right, map);
+        
+        if (root.right != null)
+            sum += RobFrom(root.right.left, map) + RobFrom(root.right.right, map);
+        
+        int nextSum = RobFrom(root.left, map) + RobFrom(root.right, map);
+        int result = Math.Max(sum, nextSum);
+        map.Add(root, result);
+        
+        return result;
+    }
+}
