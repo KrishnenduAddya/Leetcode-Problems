@@ -1,0 +1,28 @@
+// Amazon Google
+
+public class Solution {
+    bool[] visited;
+    public bool CanVisitAllRooms(IList<IList<int>> rooms) {
+        int n = rooms.Count;
+        visited = new bool[n];
+        visited[0] = true;
+        DFS(rooms, 0);
+        
+        //foreach(bool b in visited){
+        //    if(!b)
+        //        return false;
+        //}
+        return visited.All(k => k);
+    }
+    
+    private void DFS(IList<IList<int>> rooms, int roomNo){
+        foreach(int roomKey in rooms[roomNo])
+        {
+            if(!visited[roomKey])
+            {
+                visited[roomKey] = true;
+                DFS(rooms, roomKey);
+            }
+        }
+    }
+}
