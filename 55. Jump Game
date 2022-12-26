@@ -1,0 +1,15 @@
+// Adobe Amazon Apple Bloomberg Facebook Google Microsoft Nutanix Oracle Postmates Uber
+
+public class Solution {
+    public bool CanJump(int[] nums) {
+        int n = nums.Length;
+        int reachable = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if(i > reachable)
+                return false;
+            reachable = Math.Max(i + nums[i], reachable);
+        }
+        return true;
+    }
+}
