@@ -1,0 +1,17 @@
+public class Solution {
+    public int MaximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+        int n = rocks.Length;
+        int[] remaining = new int[n];
+        
+        int i = 0;
+        for(i = 0; i < n; i++)
+            remaining[i] = capacity[i] - rocks[i];
+        
+        Array.Sort(remaining);
+        
+        for(i = 0; i < n && additionalRocks >= remaining[i]; i++)
+            additionalRocks = additionalRocks - remaining[i];
+        
+        return i;
+    }
+}
