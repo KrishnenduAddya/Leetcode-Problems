@@ -1,0 +1,26 @@
+// Amazon Bloomberg Google Walmart Labs
+
+public class Solution {
+    public IList<IList<int>> AllPathsSourceTarget(int[][] graph) {
+        IList<IList<int>> result = new List<IList<int>>(); 
+        List<int> curr = new List<int>();
+        curr.Add(0);
+        DFS(0, graph, curr, result);
+        return result;
+    }
+    
+    private void DFS(int source, int[][] graph, List<int> curr, IList<IList<int>> result)
+    {
+        if(source == graph.Length - 1)
+        {
+            result.Add(new List<int>(curr));
+            return;
+        }
+        foreach(int s in graph[source])
+        {
+            curr.Add(s);
+            DFS(s, graph, curr, result);
+            curr.RemoveAt(curr.Count - 1);
+        }
+    }
+}
