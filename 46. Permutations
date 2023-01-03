@@ -1,0 +1,30 @@
+// Adobe Amazon Apple Atlassian Bloomberg Cisco eBay Facebook Garena GoDaddy 
+// Goldman Sachs Google LinkedIn Microsoft NetEase Oracle Paypal Salesforce Uber VMware Walmart Labs Yahoo
+
+public class Solution {
+    public IList<IList<int>> Permute(int[] nums) {
+        IList<IList<int>> result = new List<IList<int>>();
+        if(nums.Length == 0)
+            return result;
+        Permute(new List<int>(), nums, result);
+        return result;
+    }
+    
+    private void Permute(List<int> visited, int[] nums, IList<IList<int>> result)
+    {
+        if(visited.Count == nums.Length)
+        {
+            result.Add(new List<int>(visited)); 
+            return;
+        }
+        
+        for(int i = 0; i < nums.Length; i++)
+        {
+            if(visited.Contains(nums[i])) 
+                continue;
+            visited.Add(nums[i]);
+            Permute(visited, nums, result);
+            visited.RemoveAt(visited.Count - 1);
+        }
+    }
+}
