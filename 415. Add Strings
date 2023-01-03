@@ -19,14 +19,7 @@ public class Solution {
         
         if(carry != 0) 
             result.Append(carry);
-        int start = 0, end = result.Length - 1;
-        while(start < end)
-        {
-            char ch = result[start];
-            result[start] = result[end];
-            result[end] = ch;
-            start++;end--;
-        }
-        return result.ToString();
+        
+        return new string(result.ToString().Reverse().ToArray());
     }
 }
