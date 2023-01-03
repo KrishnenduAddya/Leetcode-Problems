@@ -1,0 +1,32 @@
+// Adobe Airbnb Alibaba Amazon Apple Bloomberg ByteDance Facebook Google Microsoft Nvidia Oracle Snapchat Square Intuit
+
+public class Solution {
+    public string AddStrings(string num1, string num2) {
+        int n1 = num1.Length ;
+        int n2 = num2.Length;
+        int i = n1 - 1, j = n2 - 1;
+        int carry = 0;
+        StringBuilder result = new StringBuilder();
+        while(i >= 0 || j >= 0)
+        {
+            int d1 = i >= 0 ? num1[i]-'0' : 0;
+            int d2 = j >= 0 ? num2[j]-'0' : 0;
+            int curr = (d1 + d2 + carry) % 10;
+            carry = (d1 + d2 + carry) / 10;
+            result.Append(curr);
+            i--;j--;
+        }
+        
+        if(carry != 0) 
+            result.Append(carry);
+        int start = 0, end = result.Length - 1;
+        while(start < end)
+        {
+            char ch = result[start];
+            result[start] = result[end];
+            result[end] = ch;
+            start++;end--;
+        }
+        return result.ToString();
+    }
+}
