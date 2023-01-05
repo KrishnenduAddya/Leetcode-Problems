@@ -1,3 +1,5 @@
+// Amazon Facebook Microsoft Quora
+
 public class Solution {
     public int FindMinArrowShots(int[][] points) {
         Array.Sort(points, (a,b) => a[1].CompareTo(b[1]));
