@@ -1,0 +1,21 @@
+// Google
+
+public class Solution {
+    public int MinDeletionSize(string[] strs) {
+        int n = strs.Length;
+        int m = strs[0].Length;
+
+        int result = 0;
+        for (int col = 0; col < m; col++) {
+            for (int row = 1; row < n; row++) {
+                // Characters should be in increasing order, 
+                // If not, increment the counter.
+                if (strs[row][col] < strs[row - 1][col]) {
+                    result++;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+}
