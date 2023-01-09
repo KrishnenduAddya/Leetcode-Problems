@@ -1,0 +1,46 @@
+// Amazon Cisco Google
+
+// Recursive
+
+public class Solution {
+    public IList<int> PreorderTraversal(TreeNode root) {
+        List<int> result = new List<int>();
+        Traverse(root, result);
+        return result;
+    }
+    
+    private void Traverse(TreeNode root, List<int> result)
+    {
+        if(root != null)
+        {
+            result.Add(root.val);
+            Traverse(root.left, result);
+            Traverse(root.right, result);
+        }
+    }
+}
+
+// Iterative
+
+public class Solution {
+    public IList<int> PreorderTraversal(TreeNode root) {
+        List<int> result = new List<int>();
+        if (root == null) return result;
+        
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.Push(root);
+        
+        while(stack.Count > 0)
+        {
+            TreeNode current = stack.Pop();
+            result.Add(current.val);
+            
+            if (current.right != null)
+                stack.Push(current.right);
+            
+            if (current.left != null) // In the next iteration left will be pop first
+                stack.Push(current.left);
+        }
+	    return result;
+    }
+}
