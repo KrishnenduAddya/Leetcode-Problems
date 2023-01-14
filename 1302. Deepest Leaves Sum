@@ -1,0 +1,32 @@
+// Google
+
+public class Solution {
+    int sum = 0;
+    int maxDepth = 0;
+    public int DeepestLeavesSum(TreeNode root) {
+        DFS(root, 0);
+        return sum;
+    }
+    
+    private void DFS(TreeNode root, int depth)
+    {
+        if(root == null)
+            return;
+        
+        if(root.left == null && root.right == null)
+        {
+            if(depth > maxDepth)
+            {
+                maxDepth = depth;
+                sum = root.val;
+            }
+            else if(depth == maxDepth)
+                sum = sum + root.val;
+            else
+                return;
+        }
+        
+        DFS(root.left, depth + 1);
+        DFS(root.right, depth + 1);
+    }
+}
