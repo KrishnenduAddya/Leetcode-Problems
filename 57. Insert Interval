@@ -1,0 +1,27 @@
+// Adobe Amazon Apple Dataminr Facebook Google LinkedIn Microsoft Oracle Tableau Twitter Uber Yahoo
+
+public class Solution {
+    public int[][] Insert(int[][] intervals, int[] newInterval) {
+        List<int[]> result = new List<int[]>();
+        foreach(int[] interval in intervals)
+        {
+            if (newInterval == null || interval[1] < newInterval[0])
+                result.Add(interval);
+            else if (interval[0] > newInterval[1])
+            {
+                result.Add(newInterval);
+                result.Add(interval);
+                newInterval = null;
+            } 
+            else
+            {
+                newInterval[0] = Math.Min(newInterval[0], interval[0]);
+                newInterval[1] = Math.Max(newInterval[1], interval[1]);
+            }
+        }
+        if (newInterval != null)
+            result.Add(newInterval);
+        
+        return result.ToArray();
+    }
+}
