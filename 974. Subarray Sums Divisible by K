@@ -8,10 +8,14 @@ public class Solution {
         map.Add(0,1);
         for(int i = 0; i < nums.Length; i++)
         {
+            // Calculate cumulative sum
             currSum = currSum + nums[i];
+            // Calculate remainder of cumulative sum
             int rem = currSum % k;
             if(rem < 0)
                 rem = rem + k;
+            
+            // If remainder repeats means between the same remainder appeared before and now the subarray is divisible by K 
             if(map.ContainsKey(rem))
             {
                 count = count + map[rem];
