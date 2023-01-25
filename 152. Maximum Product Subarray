@@ -1,3 +1,5 @@
+// Amazon D-E-Shaw Microsoft Morgan Stanley OYO Rooms Google Piramle Finance
+
 public class Solution {
     public int MaxProduct(int[] nums) {
         int n = nums.Length;
