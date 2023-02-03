@@ -14,9 +14,12 @@ public class Solution {
                 string curr = words[i];
                 string next = words[i + 1];
                 
+                //To handle curr = "apple", next = "app"
                 if(j >= next.Length)
                     return false;
                 
+                // If two letters from curr and next are different then 
+                // check lexicographically sorted or not using order map value
                 if(curr[j] != next[j])
                 {
                     if(orderMap[curr[j] - 'a'] > orderMap[next[j] - 'a'])
