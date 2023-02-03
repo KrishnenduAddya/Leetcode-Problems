@@ -1,0 +1,32 @@
+// Airbnb Amazon Facebook Microsoft
+
+public class Solution {
+    public bool IsAlienSorted(string[] words, string order) {
+        int[] orderMap = new int[26];
+        int seq = 0;
+        foreach(char ch in order)
+            orderMap[ch - 'a'] = seq++;
+        
+        for(int i = 0; i < words.Length - 1; i++)
+        {
+            for(int j = 0; j < words[i].Length; j++)
+            {
+                string curr = words[i];
+                string next = words[i + 1];
+                
+                if(j >= next.Length)
+                    return false;
+                
+                if(curr[j] != next[j])
+                {
+                    if(orderMap[curr[j] - 'a'] > orderMap[next[j] - 'a'])
+                        return false;
+                    else
+                        break;
+                }
+            }
+        }
+        
+        return true;
+    }
+}
