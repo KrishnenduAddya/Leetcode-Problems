@@ -1,3 +1,6 @@
+// Adobe Alibaba Amazon Apple Asana Atlassian Bloomberg ByteDance Capital One Cisco Citadel eBay Evernote Expedia Facebook Goldman Sachs Google Intel caMorgan
+// LinkedIn Microsoft Morgan Stanley Nvidia Oracle Palantir Technologies Paypal Salesforce SAP Two Sigma Uber Walmart Labs Wayfair Yahoo Zillow
+
 // Kadane's Algorithm
 // For each element decide whether to continue the existing subarray or create a new sub array
 
