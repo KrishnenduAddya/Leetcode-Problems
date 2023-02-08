@@ -1,0 +1,17 @@
+// Adobe Alibaba Amazon Apple Facebook Goldman Sachs Google Huawei Microsoft Nutanix Oracle Uber
+
+public class Solution {
+    public int Jump(int[] nums) {
+        int n = nums.Length, maxReachable = 0, lastJumpedPos = 0, jumps = 0;
+        for(int i = 0; i < n - 1; i++)
+        {
+            maxReachable = Math.Max(maxReachable, i + nums[i]); 
+            if(i == lastJumpedPos) 
+            {	
+                lastJumpedPos = maxReachable;
+                jumps++;
+            }    
+        }
+        return jumps;
+    }
+}
