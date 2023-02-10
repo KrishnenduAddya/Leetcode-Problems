@@ -1,0 +1,32 @@
+// Amazon Bloomberg Facebook Goldman Sachs Google Microsoft Oracle Robinhood Uber
+
+public class Solution {
+    public IList<int> FindAnagrams(string s, string p) {
+        int s_len = s.Length;
+        int p_len = p.Length;
+        if(s_len < p_len)
+            return new List<int>();
+        int[] p_freq = new int[26];
+        int[] window_freq = new int[26];
+        
+        //Fill frequency array for first window and p
+        for(int i = 0; i < p_len; i++)
+        {
+            p_freq[p[i] - 'a']++;
+            window_freq[s[i] - 'a']++;
+        }
+        
+        List<int> result = new List<int>();
+        if(Enumerable.SequenceEqual(p_freq, window_freq))
+            result.Add(0);
+        //Fill frequency array for 2nd window onwards and check anagram
+        for(int i = 1; i <= (s_len - p_len); i++)
+        {
+            window_freq[s[i - 1] - 'a']--;
+            window_freq[s[i + p_len - 1] - 'a']++;
+            if(Enumerable.SequenceEqual(p_freq, window_freq))
+                result.Add(i);
+        }
+        return result;
+    }
+}
