@@ -1,0 +1,26 @@
+// Akuna Capital Amazon Apple Bloomberg Expedia Facebook GoDaddy Goldman Sachs Google Lyft Microsoft Redfin Snapchat Walmart Labs Wayfair Yandex Yelp Zillow
+
+public class Solution {
+    public int Compress(char[] chars) {
+        int n = chars.Length;
+        int indexAns = 0, index = 0;
+        while(index < n)
+        {
+            char currChar = chars[index];
+            int count = 0;
+            while(index < n && chars[index] == currChar)
+            {
+                index++;
+                count++;
+            }
+            chars[indexAns++] = currChar;
+            if(count != 1)
+            {
+                char[] charArray = count.ToString().ToCharArray();
+                foreach(char ch in charArray) 
+                    chars[indexAns++] = ch;
+            }
+        }
+        return indexAns;
+    }
+}
