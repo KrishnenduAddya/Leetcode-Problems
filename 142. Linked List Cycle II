@@ -1,5 +1,22 @@
 // Adobe Amazon Apple eBay Google LinkedIn Microsoft
 
+// l1 = Start to cycle start point
+// l2 = Cycle start point to slow and fast colliding point
+// n = Number of turns in the cycle covered by fast pointer
+// c = Length of the cycle
+
+// Slow pointer covers distance l1 + l2
+// Fast pointer covers distance l1 + l2 + nc
+
+// As fast covers twice distance of slow pointer,
+// So 2(l1 + l2) = l1 + l2 + nc
+// 2l1 + 2l2 = l1 + l2 + nc
+// l1 + l2 = nc
+// l1 = nc - l2
+
+// Draw the picture for better understanding
+
+
 public class Solution {
     public ListNode DetectCycle(ListNode head) {
         if(head == null || head.next == null)
