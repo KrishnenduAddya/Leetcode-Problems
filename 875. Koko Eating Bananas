@@ -1,0 +1,40 @@
+// Airbnb Facebook Google
+
+// We are starting with max value such that koko can eat all the bananas,
+// then trying to minimize it
+
+public class Solution {
+    public int MinEatingSpeed(int[] piles, int h) {
+        int low = 1, high = -1, ans = -1;
+        
+        foreach(int pile in piles) 
+            high = Math.Max(pile, high);
+        
+        // Binary search to find the smallest valid k.
+        while (low <= high) 
+        {
+            int mid = low + (high - low) / 2;
+            long ch = CountHour(piles, mid);
+            if (ch <= h) 
+            {
+                ans = mid;
+                high = mid - 1;
+            }
+            else
+                low = mid + 1;
+        }
+        return ans;
+    }
+    
+    private long CountHour(int[] piles, int mid) 
+    {
+        long countHour = 0;
+        foreach(int pile in piles) 
+        {
+            countHour += pile / mid;
+            if (pile % mid != 0)
+                countHour++;
+        }
+        return countHour;
+    }
+}
