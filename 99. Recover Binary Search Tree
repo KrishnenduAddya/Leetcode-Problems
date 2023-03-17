@@ -1,0 +1,36 @@
+//  Amazon Bloomberg Facebook Goldman Sachs Google Microsoft Uber
+
+public class Solution {
+    TreeNode first = null;
+    TreeNode second = null;
+    TreeNode prev= new TreeNode(int.MinValue);
+    
+    public void RecoverTree(TreeNode root) {
+        InOrder(root);
+        
+        // Swap the values of the two nodes
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+    
+    private void InOrder(TreeNode root) {
+        
+        if (root == null)
+            return;
+            
+        InOrder(root.left);
+        
+        // If first element has not been found, assign it to prev
+        if (first == null && prev.val > root.val)
+            first = prev;
+    
+        // If first element is found, assign the second element to the root
+        if (first != null && prev.val > root.val)
+            second = root;
+            
+        prev = root;
+
+        InOrder(root.right);
+    }
+}
