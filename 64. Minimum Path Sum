@@ -1,0 +1,53 @@
+// Adobe Amazon Apple Bloomberg Dropbox Goldman Sachs Google Microsoft Nvidia Rubrik Uber
+
+// Top Down Approach
+
+public class Solution {
+    public int MinPathSum(int[][] grid) {
+        int m = grid.Length;
+        int n = grid[0].Length;
+        int[,] dp = new int[m,n];
+        
+        // Start from m - 1, n - 1
+        return FindPath(grid, m - 1, n - 1, dp);
+    }
+    
+    private int FindPath(int[][] grid, int i, int j, int[,] dp)
+    {
+        if(i == 0 && j == 0) return grid[i][j];
+        if(i < 0 || j < 0) return 10000;
+        
+        if(dp[i, j] != 0) return dp[i, j];
+        
+        int up = grid[i][j] + FindPath(grid, i - 1, j, dp);
+        int left = grid[i][j] + FindPath(grid, i, j - 1, dp);
+        
+        return dp[i,j] = Math.Min(up, left);
+    }
+}
+
+// Bottom Up Approach
+
+public class Solution {
+    public int MinPathSum(int[][] grid) {
+        int m = grid.Length;
+        int n = grid[0].Length;
+        int[,] dp = new int[m,n];
+        
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(i == 0 && j == 0) 
+                    dp[i, j] = grid[i][j];
+                else if(i == 0 && j != 0)
+                    dp[i, j] = grid[i][j] + dp[i, j - 1];
+                else if(i != 0 && j == 0) 
+                    dp[i, j] = grid[i][j] + dp[i - 1, j];
+                else 
+                    dp[i, j] = grid[i][j] + Math.Min(dp[i - 1, j], dp[i, j - 1]);
+            }
+        }
+        return dp[m - 1, n - 1];
+    }
+}
