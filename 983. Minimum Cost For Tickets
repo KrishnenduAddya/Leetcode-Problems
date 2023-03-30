@@ -1,0 +1,32 @@
+// Amazon Facebook Grab Uber
+
+public class Solution {
+    public int MincostTickets(int[] days, int[] costs) {
+        int n = days.Length;
+        int[] dp = new int[n];
+        dp[0] = Math.Min(costs[0], Math.Min(costs[1], costs[2]));
+        
+        // dp[i] stores the minimum cost to travel upto ith day from 0th day
+        for(int i = 1; i < n; i++)
+        {
+            int last7 = i, last30 = i;
+            while(last7 >= 0 && days[last7] + 7 > days[i]) last7--;
+            while(last30 >= 0 && days[last30] + 30 > days[i]) last30--;
+            
+            dp[i] = dp[i - 1] + costs[0]; // On ith day buying 1 day pass
+            
+            
+            if(last7 != -1) // On ith day buying 7 days pass
+                dp[i] = Math.Min(dp[i], dp[last7] + costs[1]);
+            else
+                dp[i] = Math.Min(dp[i], costs[1]);
+            
+            if(last30 != -1) // On ith day buying 30 days pass
+                dp[i] = Math.Min(dp[i], dp[last30] + costs[2]);
+            else
+                dp[i] = Math.Min(dp[i], costs[2]);
+            
+        }
+        return dp[n - 1];
+    }
+}
