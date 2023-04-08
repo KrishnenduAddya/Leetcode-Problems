@@ -1,3 +1,5 @@
+// Amazon Samsung Flipkart
+
 // Here for each (i,j) we are checking the minimum of (i, j-1) , (i-1, j-1) and (i-1, j)
 
 public class Solution {
@@ -17,6 +19,35 @@ public class Solution {
                     result = Math.Max(dp[i, j], result);
                 }
             }
+        }
+        return result * result;
+    }
+}
+
+
+//Space Optimized
+
+public class Solution {
+    public int MaximalSquare(char[][] matrix) {
+        if(matrix.Length == 0) return 0;
+        int m = matrix.Length, n = matrix[0].Length;
+        int result = 0;
+        
+        int[] prev = new int[n + 1];
+        int[] curr = new int[n + 1];
+        
+        for (int i = 1 ; i <= m; i++)
+        {
+            for (int j = 1; j <= n; j++) 
+            {
+                if(matrix[i-1][j-1] == '1') 
+                {
+                    curr[j] = 1 + Math.Min(Math.Min(curr[j-1] , prev[j-1]), prev[j]);
+                    result = Math.Max(curr[j], result);
+                }
+            }
+            Array.Copy(curr, prev, n + 1);
+            curr = new int[n + 1];
         }
         return result * result;
     }
