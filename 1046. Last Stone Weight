@@ -1,0 +1,31 @@
+// Amazon
+
+public class Solution {
+    public int LastStoneWeight(int[] stones) {
+        int m = stones.Length;
+        int n = stones.Length;
+        Array.Sort(stones);
+        while(m > 1)
+        {
+            if(stones[n-1] == stones[n-2])
+            {
+                stones[n-1] = 0;
+                stones[n-2] = 0;
+                m--;
+            }
+            else if(stones[n-1] != stones[n-2])
+            {
+                stones[n-2] = stones[n-1] - stones[n-2];
+                stones[n-1] = 0;
+            }
+            Array.Sort(stones);
+            m--;
+        }
+        foreach(int s in stones)
+        {
+            if(s > 0)
+                return s;
+        }
+        return 0;
+    }
+}
