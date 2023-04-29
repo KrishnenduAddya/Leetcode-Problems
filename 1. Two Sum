@@ -1,0 +1,28 @@
+// Adobe Aetion Affirm Airbnb Alibaba Amazon Apple Audible Baidu BlackRock Bloomberg Booking.com Box ByteDance Cisco Citadel Citrix
+// Deutsche Bank DiDi Drawbridge Dropbox eBay EMC Expedia Facebook FactSet GE Digital GoDaddy Goldman Sachs Google Groupon Huawei IBM 
+// Indeed Intel Intuit caMorgan LinkedIn Lyft MAQ Software Mathworks Microsoft Morgan Stanley NetEase Nvidia Oracle Paypal Qualcomm Quora
+// Radius Roblox Salesforce Samsung SAP ServiceNow Snapchat Splunk Spotify Tableau Tencent Twilio Twitter Two Sigma Uber Valve Visa VMware
+// Walmart Labs Wayfair Wish Works Applications Yahoo Yandex Yelp Zillow Zoho
+
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        int[] result = new int[2];
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        int n = nums.Length;
+        
+        for(int i = 0; i < n; i++)
+        {
+            if(dict.ContainsKey(target - nums[i]))
+            {
+                result[0] = dict[target - nums[i]];
+                result[1] = i;
+                return result;
+            }
+            if(!dict.ContainsKey(nums[i]))
+            {
+                dict.Add(nums[i], i);
+            }
+        }
+        return result;
+    }
+}
