@@ -1,0 +1,30 @@
+// Adobe Aetion Airbnb Alibaba Amazon Apple Baidu Bloomberg ByteDance Capital One Cisco Facebook Flipkart GoDaddy Google
+// Grab Huawei IBM Intel Lyft Mathworks Microsoft Nvidia Oracle Paypal Qualcomm Redfin SAP ServiceNow Tencent Uber VMware Wish Yahoo Yandex Zoho
+
+public class Solution {
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode();
+        ListNode temp = head;
+        int carry = 0;
+        while(l1 != null || l2 != null || carry == 1)
+        {
+            int sum = 0;
+            if(l1 != null)
+            {
+                sum = sum + l1.val;
+                l1 = l1.next;
+            }
+            if(l2 != null)
+            {
+                sum = sum + l2.val;
+                l2 = l2.next;
+            }
+            sum = sum + carry;
+            carry = sum / 10;
+            ListNode newNode = new ListNode(sum % 10);
+            temp.next = newNode;
+            temp = temp.next;
+        }
+        return head.next;
+    }
+}
