@@ -1,0 +1,23 @@
+// Adobe Airbnb Amazon Apple Bloomberg ByteDance Facebook Goldman Sachs Google Lyft Microsoft Oracle Uber VMware Walmart Labs Yahoo
+
+public class Solution {
+    public int MaxArea(int[] height) {
+        int start = 0;
+        int end = height.Length - 1;
+        int maxAmount = -1;
+        while(start < end)
+        {
+            if(height[start] < height[end])
+            {
+                maxAmount = Math.Max(maxAmount, height[start] * (end - start)) ;
+                start++;
+            }
+            else
+            {
+                maxAmount = Math.Max(maxAmount, height[end] * (end - start));
+                end--;
+            }
+        }
+        return maxAmount;
+    }
+}
