@@ -1,0 +1,36 @@
+// Amazon Google
+
+public class Solution {
+    public int MaxLevelSum(TreeNode root) {
+        if (root == null)
+            return 0;
+        
+        int result = 0, maxSum = Int32.MinValue;
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        
+        int level = 1;
+        queue.Enqueue(root);
+        
+        while (queue.Count > 0)
+        {
+            int sum = 0, count = queue.Count;
+            
+            while(count-- > 0)
+            {
+                TreeNode node = queue.Dequeue();
+                sum += node.val;
+
+                if(node.left != null) queue.Enqueue(node.left);
+                if(node.right != null) queue.Enqueue(node.right);
+            }
+            
+            if (sum > maxSum)
+            {
+                maxSum = sum;
+                result = level;
+            }
+            level++;
+        }
+        return result;
+    }
+}
