@@ -2,11 +2,14 @@
 
 public class Solution {
     public int MaxArea(int[] height) {
+        // Two pointer approach
         int start = 0;
         int end = height.Length - 1;
         int maxAmount = -1;
+
         while(start < end)
         {
+            // Consider shorter height to calculate area
             if(height[start] < height[end])
             {
                 maxAmount = Math.Max(maxAmount, height[start] * (end - start)) ;
