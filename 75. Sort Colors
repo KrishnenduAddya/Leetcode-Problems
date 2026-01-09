@@ -1,0 +1,35 @@
+// Dutch National Flag Algorithm
+// 0 to low-1 --> 0
+// high+1 to n-1 --> 2
+// low to high --> 1
+public class Solution {
+    public void SortColors(int[] nums) {
+        int low = 0;
+        int mid = 0;
+        int high = nums.Length - 1;
+        int temp;
+        while(mid <= high)
+        {
+            if(nums[mid] == 0)
+            {
+                temp = nums[mid];
+                nums[mid] = nums[low];
+                nums[low] = temp;
+                low++;
+                mid++;
+            }
+            else if(nums[mid] == 1)
+            {
+                mid++;
+            }
+            else
+            {
+                temp = nums[mid];
+                nums[mid] = nums[high];
+                nums[high] = temp;
+                high--;
+            }
+        }
+        
+    }
+}
