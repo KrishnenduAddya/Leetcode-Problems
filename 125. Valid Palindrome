@@ -20,32 +20,37 @@ public class Solution {
     }
 }
 
-2nd Approach
--------------
+2nd Approach without modifying the actual string
+-------------------------------------------------
 
 public class Solution {
     public bool IsPalindrome(string s) {
-        s = s.ToLower();
-        int low = 0, high = s.Length - 1;
-        while(low < high)
+        int left = 0;
+        int right = s.Length - 1;
+
+        while(left < right)
         {
-            if(!(s[low] >= 'a' && s[low] <= 'z' || s[low] >= 48 && s[low] <= 57))
-            {
-                low++;
-                continue;
-            } 
-            if(!(s[high] >= 'a' && s[high] <= 'z' || s[high] >= 48 && s[high] <= 57))
-            {
-                high--;
-                continue;
-            } 
-            if(s[low] != s[high])
+            // Skip non-alphanumeric characters
+            while (left < right && !IsLetterOrDigit(s[left]))
+                left++;
+            while (left < right && !IsLetterOrDigit(s[right]))
+                right--;
+
+            // Compare characters after converting to lower (case-insensitive)
+            if (Char.ToLower(s[left]) != Char.ToLower(s[right]))
                 return false;
-            low++;
-            high--;
-            
-        }
-        return true;;
+
+            left++;
+            right--;
+
+        }        
+        return true;
+    }
+
+    private bool IsLetterOrDigit(char ch)
+    {
+        return (ch >= 'A' && ch <= 'Z') 
+        || (ch >= 'a' && ch <= 'z') 
+        ||  (ch >= 48 && ch <= 57);
     }
 }
-
