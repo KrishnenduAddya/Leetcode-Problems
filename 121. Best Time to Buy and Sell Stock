@@ -1,18 +1,29 @@
-// Minimize the buying price (min)
-// Maximize the profit
+// Accolite Amazon D-E-Shaw Directi Flipkart Goldman Sachs Intuit MakeMyTrip Microsoft Ola Cabs Oracle Paytm Salesforce Swiggy Walmart Media.net Google
+
+// Minimize the buying price (minPrice)
+// Maximize the profit (maxProfit)
 
 public class Solution {
     public int MaxProfit(int[] prices) {
-        int min = prices[0];
-        int profit = 0;
+        // Store minimum price
+        int minPrice = prices[0];
+
+        // Store max profit
+        int maxProfit = 0;
+
         for(int i = 1; i < prices.Length; i++)
         {
-            int tempProfit = prices[i] - min;
-            if(tempProfit > profit)
-                profit = tempProfit;
-            if(prices[i] < min)
-                min = prices[i];
+            // Update minimum price if current price is lower
+            if (prices[i] < minPrice)
+                minPrice = prices[i];
+            
+            // Calculate profit if selling today
+            int profit = prices[i] - minPrice;
+
+            // Update max profit if this profit is greater
+            if(profit > maxProfit)
+                maxProfit = profit;
         }
-        return profit;
+        return maxProfit;
     }
 }
