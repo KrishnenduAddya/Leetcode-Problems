@@ -6,21 +6,26 @@
 
 public class Solution {
     public int[] TwoSum(int[] nums, int target) {
+        // Result array
         int[] result = new int[2];
-        Dictionary<int, int> dict = new Dictionary<int, int>();
+
+        // Use a dictionary to store seen numbers : number, index
+        Dictionary<int, int> map = new Dictionary<int, int>();
         int n = nums.Length;
         
         for(int i = 0; i < n; i++)
         {
-            if(dict.ContainsKey(target - nums[i]))
+            // Find the complement
+            if(map.ContainsKey(target - nums[i]))
             {
-                result[0] = dict[target - nums[i]];
+                result[0] = map[target - nums[i]];
                 result[1] = i;
-                return result;
+                break;
             }
-            if(!dict.ContainsKey(nums[i]))
+            // Store the seen number and its index to use later
+            if(!map.ContainsKey(nums[i]))
             {
-                dict.Add(nums[i], i);
+                map.Add(nums[i], i);
             }
         }
         return result;
