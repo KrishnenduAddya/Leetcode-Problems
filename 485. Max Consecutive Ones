@@ -1,4 +1,4 @@
-// Amazon Google Oracle Paym
+// Amazon Google Oracle Paytm
 
 public class Solution {
     public int FindMaxConsecutiveOnes(int[] nums) {
