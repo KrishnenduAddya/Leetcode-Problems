@@ -6,12 +6,16 @@
 
 public class Solution {
     public int MaxSubArray(int[] nums) {
-        int maximum = nums[0];
-        int maxEnding = nums[0];
+        // Kadane's Algorithm
+        int maxSumEnding = nums[0];
+        int maxSum = nums[0]; 
+
         for(int i = 1; i < nums.Length; i++)
         {
-            maxEnding = Math.Max(maxEnding + nums[i], nums[i]);
-            maximum = Math.Max(maximum, maxEnding);
+            maxSumEnding = Math.Max(maxSumEnding + nums[i], nums[i]);
+            if(maxSumEnding > maxSum)
+                maxSum = maxSumEnding;
         }
-        return maximum;
+        return maxSum; 
     }
+}
