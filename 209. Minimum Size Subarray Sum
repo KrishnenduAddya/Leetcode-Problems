@@ -1,0 +1,22 @@
+// Accolite Amazon Goldman Sachs Google Facebook
+
+public class Solution {
+    public int MinSubArrayLen(int target, int[] nums) {
+        // Sliding window
+        int n = nums.Length;
+        int left = 0, sum = 0;
+        int minLen = int.MaxValue;
+        
+        for(int right = 0; right < n; right++) // Expand the window by 1 increasing right
+        {
+            sum = sum + nums[right];
+            while(sum >= target) // When sum >= target for a subarray, store the minimum length and try to eliminate elements from left and check for same
+            {
+                minLen = Math.Min(minLen, right - left + 1);
+                sum = sum - nums[left];
+                left++; // Shrink the window by 1 increasing left
+            }
+        }
+        return  minLen == int.MaxValue ? 0 : minLen;
+    }
+}
