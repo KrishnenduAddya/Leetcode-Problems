@@ -1,0 +1,24 @@
+// Amazon Microsoft Housing.com Adobe
+
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        // Sliding Window
+        int n = s.Length;
+        int left = 0, maxLen = 0;
+
+        // Tracks unique characters for current window substring
+        HashSet<char> window = new HashSet<char>();
+
+        for (int right = 0; right < n; right++) // Expand the window by 1 increasing right
+        {
+            while (window.Contains(s[right])) // If current character is already found in existing window then remove the characters from left until current duplicate character removed
+            {
+                window.Remove(s[left]);
+                left++;
+            }
+            window.Add(s[right]); // Substring starts with updated left, add the current character again
+            maxLen = Math.Max(maxLen, right - left + 1);
+        }
+        return maxLen;
+    }
+}
