@@ -1,0 +1,40 @@
+// Amazon
+
+public class Solution {
+    public long MaximumSubarraySum(int[] nums, int k) {
+        // Sliding Window
+        int n = nums.Length;
+        long maxSum = 0;
+        long currentSum = 0;
+
+        // Tracks unique numbers for current window subarray
+        var set = new HashSet<int>();
+
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            // If duplicate, shrink window from left
+            while (set.Contains(nums[right])) {
+                set.Remove(nums[left]);
+                currentSum -= nums[left];
+                left++;
+            }
+
+            // Add current element
+            set.Add(nums[right]);
+            currentSum += nums[right];
+
+            // If window size exceeds k, shrink from left
+            if (right - left + 1 > k) {
+                set.Remove(nums[left]);
+                currentSum -= nums[left];
+                left++;
+            }
+
+            // If window size == k, update max
+            if (right - left + 1 == k) {
+                maxSum = Math.Max(maxSum, currentSum);
+            }
+        }
+        return maxSum;
+    }
+}
