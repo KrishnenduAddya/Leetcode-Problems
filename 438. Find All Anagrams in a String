@@ -2,31 +2,42 @@
 
 public class Solution {
     public IList<int> FindAnagrams(string s, string p) {
-        int s_len = s.Length;
-        int p_len = p.Length;
-        if(s_len < p_len)
-            return new List<int>();
-        int[] p_freq = new int[26];
-        int[] window_freq = new int[26];
+        int pLen = p.Length;
+        int sLen = s.Length;
+        var result = new List<int>();
+        if(pLen > sLen)
+            return result;
+
+        int[] pFreq = new int[26];
+        int[] windowFreq = new int[26];
         
-        //Fill frequency array for first window and p
-        for(int i = 0; i < p_len; i++)
-        {
-            p_freq[p[i] - 'a']++;
-            window_freq[s[i] - 'a']++;
+        // Count frequency of p
+        foreach (char ch in p) {
+            pFreq[ch - 'a']++;
         }
-        
-        List<int> result = new List<int>();
-        if(Enumerable.SequenceEqual(p_freq, window_freq))
-            result.Add(0);
-        //Fill frequency array for 2nd window onwards and check anagram
-        for(int i = 1; i <= (s_len - p_len); i++)
-        {
-            window_freq[s[i - 1] - 'a']--;
-            window_freq[s[i + p_len - 1] - 'a']++;
-            if(Enumerable.SequenceEqual(p_freq, window_freq))
-                result.Add(i);
+
+        // Sliding window
+        for (int i = 0; i < sLen; i++) {
+            windowFreq[s[i] - 'a']++;
+
+            // Maintain window size equal to p
+            if (i >= pLen) {
+                windowFreq[s[i - pLen] - 'a']--;
+            }
+
+            // Compare arrays
+            // if(Enumerable.SequenceEqual(p_freq, window_freq)) inbuilt comparison method will also work
+            if (AreEqual(pFreq, windowFreq)) {
+                result.Add(i - pLen + 1);
+            }
         }
         return result;
+    }
+
+    private bool AreEqual(int[] arr1, int[] arr2) {
+        for (int i = 0; i < 26; i++) {
+            if (arr1[i] != arr2[i]) return false;
+        }
+        return true;
     }
 }
