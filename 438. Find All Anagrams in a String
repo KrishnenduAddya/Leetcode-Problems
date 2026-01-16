@@ -26,7 +26,7 @@ public class Solution {
             }
 
             // Compare arrays
-            // if(Enumerable.SequenceEqual(p_freq, window_freq)) inbuilt comparison method will also work
+            // if(Enumerable.SequenceEqual(pFreq, windowFreq)) inbuilt comparison method will also work
             if (AreEqual(pFreq, windowFreq)) {
                 result.Add(i - pLen + 1);
             }
