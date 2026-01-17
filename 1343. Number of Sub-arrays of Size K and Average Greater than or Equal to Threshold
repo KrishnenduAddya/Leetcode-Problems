@@ -1,0 +1,27 @@
+// Sliding window
+
+public class Solution {
+    public int NumOfSubarrays(int[] arr, int k, int threshold) {
+        int n = arr.Length;
+        int count = 0;
+
+        // Step 1: Initial window sum of first k elements
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) {
+            windowSum += arr[i];
+        }
+
+        // Step 2: Check first window
+        if(windowSum / k >= threshold)
+            count++;
+
+        // Step 3: Slide the window
+        for (int i = k; i < n; i++) {
+            windowSum += arr[i] - arr[i - k]; // Add new element and remove old from window
+            if (windowSum / k >= threshold) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
