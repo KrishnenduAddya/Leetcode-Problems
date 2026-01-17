@@ -1,0 +1,30 @@
+// Amazon
+
+// Sliding window with hashset
+
+public class Solution {
+    public IList<string> FindRepeatedDnaSequences(string s) {
+        int n = s.Length;
+
+        // HashSet to store all substrings we've seen so far
+        HashSet<string> seen = new HashSet<string>();
+
+        // HashSet to store substrings that occur more than once
+        HashSet<string> repeated = new HashSet<string>();
+
+        for (int i = 0; i + 10 <= n; i++) {
+            // Extract the current 10-letter substring as window
+            string window = s.Substring(i, 10);
+
+            // If we've already seen this window substring, add it to repeated
+            if (seen.Contains(window)) {
+                repeated.Add(window);
+            } 
+            else {
+                // Otherwise, mark it as seen
+                seen.Add(window);
+            }
+        }
+        return repeated.ToList();
+    }
+}
