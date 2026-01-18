@@ -31,8 +31,8 @@ public class Solution {
     }
 }
 
-// Advanced Approach
-// --------------------
+// Optimized Approach
+// ------------------
 
 public class Solution {
     public int[] ProductExceptSelf(int[] nums) {
