@@ -1,0 +1,67 @@
+// Prefix Sum
+
+Basic Approach O(N) Space
+-------------------------
+
+public class Solution {
+    public int FindMiddleIndex(int[] nums) {
+        int n = nums.Length;;
+        int[] leftPrefixSum = new int[n];
+        int[] rightPrefixSum = new int[n];
+
+        // Compute and populate the left prefix sum array
+        leftPrefixSum[0] = nums[0];
+        for(int i = 1; i < n; i++)
+        {
+            leftPrefixSum[i] = leftPrefixSum[i - 1] + nums[i];
+        }
+
+        // Compute and populate the right prefix sum array
+        rightPrefixSum[n - 1] = nums[n - 1];
+        for(int i = n - 2; i >= 0; i--)
+        {
+            rightPrefixSum[i] = nums[i] + rightPrefixSum[i + 1];
+        }
+
+        // Compare leftPrefixSum and rightPrefixSum and return the middleIndex
+        for(int i = 0; i < n; i++)
+        {
+            int leftSum = i == 0 ? 0 : leftPrefixSum[i - 1];
+            int rightSum = i == n - 1 ? 0 : rightPrefixSum[i + 1];
+            if(leftSum == rightSum)
+                return i;
+        }
+        return -1;
+    }
+}
+
+Optimized Approach O(1) Space
+-----------------------------
+
+public class Solution {
+    public int FindMiddleIndex(int[] nums) {
+        int n = nums.Length;;
+        
+        // Step 1: Compute the total sum of the array
+        int total = 0;
+        foreach (int num in nums) total += num;
+
+        // Step 2: Traverse the array while maintaining leftSum
+        int leftSum = 0;
+        for (int i = 0; i < n; i++) 
+        {
+            int rightSum = total - leftSum - nums[i];
+
+            // Check if left sum equals right sum
+            if (leftSum == rightSum) {
+                return i; // Found the leftmost middleIndex
+            }
+
+            // Update leftSum for next iteration
+            leftSum += nums[i];
+        }
+
+        // Step 3: If no valid index found, return -1
+        return -1;
+    }
+}
