@@ -9,23 +9,22 @@ public class Solution {
         long total = 0;
         foreach (int num in nums) total += num;
 
-        // Step 2: Traverse the array while maintaining leftSum
+        // Step 2: Traverse the array while maintaining leftSum and rightSum
+        // Here leftSum store the sum of first i + 1 elements
+        // and rightSum stores the sum of last n - 1 - i elements
         long leftSum = nums[0], rightSum = total;
         for (int i = 0; i < n - 1; i++) 
         {
             rightSum = rightSum - nums[i];
 
-            // Check if left sum (for i + 1) greater equals to right sum
-            if (leftSum >= rightSum) {
+            // Check if left sum greater equals to right sum
+            if (leftSum >= rightSum)
                 count++;
-            }
 
             // Update leftSum for next iteration
             leftSum += nums[i + 1];
         }
-
+        
         return count;
-
-
     }
 }
