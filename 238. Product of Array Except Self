@@ -1,24 +1,60 @@
+// Accolite Amazon D-E-Shaw Intuit Morgan Stanley Opera Microsoft Flipkart Facebook
+
+// Prefix Sum
+
+// Basic Approach
+// --------------
+
 public class Solution {
     public int[] ProductExceptSelf(int[] nums) {
         int n = nums.Length;
-        int[] result = new int[n];
-        int p = 1;
+
+        int [] leftProduct = new int[n];
+        int [] rightProduct = new int[n];
+        int [] product = new int[n];
+
+        // Step 1 : Populate left product array
+        leftProduct[0] = 1;
+        for(int i = 1; i < n; i++)
+            leftProduct[i] = leftProduct[i - 1] * nums[i - 1];
+
+        // Step 2 : Populate right product array
+        rightProduct[n - 1] = 1;
+        for(int i = n - 2; i >= 0; i--)
+            rightProduct[i] = nums[i + 1] * rightProduct[i + 1];
+
+        // Step 3: Populate the final product array
+        for(int i = 0; i < n; i++)
+            product[i] = leftProduct[i] * rightProduct[i];
         
-        // In first step multiply numbers with the numbers left to it
-        // and store in result array
+        return product;
+    }
+}
+
+// Advanced Approach
+// --------------------
+
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        int n = nums.Length;
+        int [] product = new int[n];
+
+        // Step 1 : Compute left products
+        int p = 1;
         for(int i = 0; i < n; i++)
         {
-            result[i] = p;
+            product[i] = p;
             p = p * nums[i];
         }
+            
+        // Step 2 : Compute left * right products which yeilds the final product array
         p = 1;
-        // In second step multiply result with the numbers product right to it
-        // and store in result array
         for(int i = n - 1; i >= 0; i--)
         {
-            result[i] = result[i] * p;
+            product[i] = product[i] * p;
             p = p * nums[i];
         }
-        return result;
+        
+        return product;
     }
 }
