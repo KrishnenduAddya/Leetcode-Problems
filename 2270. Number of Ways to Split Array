@@ -1,0 +1,31 @@
+// Prefix Sum
+
+public class Solution {
+    public int WaysToSplitArray(int[] nums) {
+        int n = nums.Length;
+        int count = 0;
+        
+        // Step 1: Compute the total sum of the array
+        long total = 0;
+        foreach (int num in nums) total += num;
+
+        // Step 2: Traverse the array while maintaining leftSum
+        long leftSum = nums[0], rightSum = total;
+        for (int i = 0; i < n - 1; i++) 
+        {
+            rightSum = rightSum - nums[i];
+
+            // Check if left sum (for i + 1) greater equals to right sum
+            if (leftSum >= rightSum) {
+                count++;
+            }
+
+            // Update leftSum for next iteration
+            leftSum += nums[i + 1];
+        }
+
+        return count;
+
+
+    }
+}
