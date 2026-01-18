@@ -10,7 +10,7 @@ public class Solution {
         foreach (int num in nums) total += num;
 
         // Step 2: Traverse the array while maintaining leftSum and rightSum
-        // Here leftSum store the sum of first i + 1 elements
+        // Here leftSum stores the sum of first i + 1 elements
         // and rightSum stores the sum of last n - 1 - i elements
         long leftSum = nums[0], rightSum = total;
         for (int i = 0; i < n - 1; i++) 
