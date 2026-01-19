@@ -2,33 +2,47 @@
 // eBay Expedia Facebook Goldman Sachs Google Groupon IBM Mathworks Microsoft Oracle Paypal Postmates Qualtrics
 // Quora Salesforce Snapchat Splunk Square Tencent Uber Visa Walmart Labs Works Applications Yahoo Yandex
 
+// Adobe Amazon Microsoft Morgan Stanley Samsung Snapdeal Times Internet
+
 public class Solution {
     public IList<IList<int>> ThreeSum(int[] nums) {
+        // Sort the array 
+        // Makes it easier to avoid duplicates and allows the use of the two-pointer technique to efficiently find pairs
         Array.Sort(nums);
         int n = nums.Length;
-        IList<IList<int>> result = new List<IList<int>>(); 
+
+        // Result matrix
+        var result = new List<IList<int>>();
+
         for (int i = 0; i < n - 2; i++)
         {
-            if (i == 0 || nums[i] != nums[i-1])
+            // Skip for duplicate nums[i]
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            // Two pointer approach
+            int left = i + 1;
+            int right = n - 1;
+
+            // Now it becomes like sorted two sum problem (Two Sum II)
+            while (left < right)
             {
-                int start = i + 1, end = n - 1, sum = 0 - nums[i];
-                while (start < end)
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum == 0)
                 {
-                    if (nums[start] + nums[end] == sum)
-                    {
-                        result.Add(new List<int>(){nums[i], nums[start], nums[end]});
-                        while (start < end && nums[start] == nums[start + 1])
-                            start++;
-                        while (start < end && nums[end] == nums[end - 1]) 
-                            end--;
-                        start++; 
-                        end--;
-                    } 
-                    else if (nums[start] + nums[end] < sum)
-                        start++;
-                    else
-                        end--;
-               }
+                    result.Add(new List<int> { nums[i], nums[left], nums[right] });
+                    
+                    // Skip duplicate triplets
+                    while (left < right && nums[left] == nums[left + 1])
+                        left++;
+                    while (left < right && nums[right] == nums[right - 1]) 
+                        right--;
+                    left++; 
+                    right--;
+                } 
+                else if (sum < 0)
+                    left++; // Need a larger sum
+                else
+                    right--; // Need a smaller sum
             }
         }
         return result;
