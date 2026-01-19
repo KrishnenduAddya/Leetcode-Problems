@@ -2,19 +2,28 @@
 
 public class Solution {
     public int[] TwoSum(int[] numbers, int target) {
-        int start = 0;
-        int end = numbers.Length - 1;
+        // Result array
+        int[] result = new int[2];
+
+        // Two Pointers
+        int left = 0;
+        int right = numbers.Length - 1;
         
-        while(start < end)
+        while(left < right)
         {
-            int sum = numbers[start] + numbers[end];
+            int sum = numbers[left] + numbers[right];
             if(sum == target)
-                return new int[2]{start + 1,  end + 1};
+            {
+                // Need to add 1 as 1-indexed array
+                result[0] = left + 1;
+                result[1] = right + 1;
+                break;
+            }
             else if(sum < target)
-                start++;
+                left++;
             else
-                end--;
+                right--;
         }
-        return new int[]{};
+        return result;
     }
 }
