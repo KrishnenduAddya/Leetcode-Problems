@@ -1,0 +1,32 @@
+// OYO Rooms
+
+// Sliding Window
+
+public class Solution {
+    public double FindMaxAverage(int[] nums, int k) {
+        int n = nums.Length;
+        
+        double windowSum = 0;
+        for(int i = 0; i < k; i++)
+            windowSum += nums[i]; // Calculate sum of first k elements
+        
+        double windowAverage = windowSum / k; // Average of the first window
+        double maxAverage = windowAverage; 
+        
+        // Slide the window across the array
+        for(int i = k; i < n; i++)
+        {
+            // Update window sum: add new element, remove the element that goes out of window
+            windowSum = windowSum + nums[i] - nums[i - k];
+            
+            // Calculate new window average
+            windowAverage = windowSum / k;
+            
+            // Update max average if current window average is greater
+            if(windowAverage > maxAverage)
+                maxAverage = windowAverage;
+        }
+        
+        return maxAverage;
+    }
+}
