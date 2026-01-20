@@ -1,20 +1,30 @@
+// Amazon Facebook Microsoft Yandex
+
+// Sliding Window
+
 public class Solution {
     public int LongestOnes(int[] nums, int k) {
         int n = nums.Length;
-        int start = 0, flipped = 0, max = 0;
+        int left = 0;
+        int maxOnes = 0;
+        // Count of zeros flipped in the current window
+        int flipped = 0;
         
-        for(int end = 0; end < n; end++)
-        {
-            if(nums[end] == 0)
-                flipped++;
-            while(flipped > k)
-            {
-                if(nums[start] == 0) 
-                    flipped--;
-                start++;
+        // Expand the window by moving 'right'
+        for(int right = 0; right < n; right++) {
+            if(nums[right] == 0)
+                flipped++;            // Count this zero as flipped
+            
+            // If flipped zeros exceed k, shrink window from the left
+            while(flipped > k) {
+                if(nums[left] == 0)
+                    flipped--;        // Remove a flipped zero from the count
+                left++;               // Move left pointer forward
             }
-            max = Math.Max(max, end - start + 1);
+            
+            // Update maximum window length (valid subarray size)
+            maxOnes = Math.Max(maxOnes, right - left + 1);
         }
-        return max;
+        return maxOnes;
     }
 }
