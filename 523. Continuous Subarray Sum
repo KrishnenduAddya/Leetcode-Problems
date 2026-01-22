@@ -1,14 +1,25 @@
+// Amazon Facebook Google Microsoft Samsung
+
+// Prefix Sum + HashMap
+
 public class Solution {
     public bool CheckSubarraySum(int[] nums, int k) {
-        //The main idea is (x + n*k) % k = x where x is the remainder which can be 0,1,...,k-1.
+        // The problem reduces to checking if two prefix sums have the same remainder modulo k with at least 2 indices apart.
+        // HashMap ensures we can check this in constant time per element.
+        // The main idea is (x + n*k) % k = x where x is the remainder which can be 0,1,...,k-1.
+        int n = nums.Length;
+        int prefixSum = 0;
         Dictionary<int, int> map = new Dictionary<int, int>();
-        int runningSum = 0;
-        for(int i = 0; i < nums.Length; i++)
+
+        for(int i = 0; i < n; i++)
         {
-            runningSum = runningSum + nums[i];
-            int rem = runningSum % k;
+            prefixSum = prefixSum + nums[i];
+
+            int rem = prefixSum % k;
             if(rem == 0 && i > 0)
                 return true;
+
+            // If same remainder found means prefixSum has been added by some multiples of k
             if(map.ContainsKey(rem))
             {
                 if(i - map[rem] > 1)
