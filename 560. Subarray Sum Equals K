@@ -1,3 +1,8 @@
+// Prefix Sum + Hashmap
+
+// Adobe Amazon Apple Bloomberg eBay Expedia Facebook Goldman Sachs Google Indeed LinkedIn Microsoft Oracle Quora Snapchat Twilio Uber Wish
+
+
 Basic Approach
 ---------------
 
@@ -22,24 +27,28 @@ ublic class Solution {
 Efficient Approach
 -------------------
 
-public int SubarraySum(int[] nums, int k) {
+public class Solution {
+    public int SubarraySum(int[] nums, int k) {
         int n = nums.Length; 
-        int currSum = 0, count = 0;
-        Dictionary<int,int> map = new Dictionary<int,int>();
+        int prefixSum = 0, count = 0;
+
+        // Dictionary to store prefix sum count
+        Dictionary<int,int> prefixSumCount = new Dictionary<int,int>();
         for(int i = 0; i < n; i++)
         {
-            currSum = currSum + nums[i]; 
-            if(currSum == k)
+            prefixSum = prefixSum + nums[i]; 
+            if(prefixSum == k)
                 count++;
-            if(map.ContainsKey(currSum - k)) 
-                count = count + map[currSum - k]; 
+            if(prefixSumCount.ContainsKey(prefixSum - k)) 
+                count = count + prefixSumCount[prefixSum - k]; 
              
-            if(map.ContainsKey(currSum)) 
-                map[currSum]++;
+            if(prefixSumCount.ContainsKey(prefixSum)) 
+                prefixSumCount[prefixSum]++;
             else
-                map.Add(currSum, 1);
+                prefixSumCount.Add(prefixSum, 1);
             
         }
         return count;
     }
 }
+
