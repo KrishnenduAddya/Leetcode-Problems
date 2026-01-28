@@ -1,0 +1,33 @@
+// Amazon Paytm Morgan Stanley
+
+// Prefix Sum
+
+public class Solution {
+    public int PivotIndex(int[] nums) {
+        int n = nums.Length;
+        int leftSum = 0, rightSum = 0;
+
+        // Step 1: Calculate total sum of array (stored in rightSum)
+        for(int i = 0; i < n; i++) {
+            rightSum = rightSum + nums[i];
+        }
+        
+        // Step 2: Traverse array to find pivot index
+        for(int i = 0; i < n; i++)
+        {
+            // Subtract current element from rightSum (right side sum)
+            rightSum = rightSum - nums[i];
+
+            // Check if left sum equals right sum → pivot found
+            if(leftSum == rightSum)
+                return i;
+
+            // Add current element to leftSum for next iteration
+            leftSum = leftSum + nums[i];
+        }
+
+        // Step 3: If no pivot index found, return -1
+        return -1;
+
+    }
+}
