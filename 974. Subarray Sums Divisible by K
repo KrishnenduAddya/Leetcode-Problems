@@ -6,23 +6,23 @@ public class Solution {
         int count = 0;
         int prefixSum = 0;
         
+        // Map stores remainder frequencies
         Dictionary<int, int> map = new Dictionary<int,int>(5);
-        map.Add(0,1);
+        map.Add(0,1);           // Initialize with remainder 0 → one occurrence
         
         for(int i = 0; i < n; i++)
         {
-            // Calculate cumulative sum
             prefixSum = prefixSum + nums[i];
 
-            // Calculate remainder of cumulative sum
+            // Compute remainder of prefix sum
             int rem = prefixSum % k;
-            if(rem < 0)
+            if(rem < 0)         // Handle negative remainders
                 rem = rem + k;
             
-            // Remainder repeats means between the same remainder appeared before and now the subarray is divisible by k
+            // Remainder repeat means the same remainder appeared before and now the subarray is divisible by k
             if(map.ContainsKey(rem))
             {
-                count = count + map[rem];
+                count = count + map[rem]; 
                 map[rem]++;
             }
             else
