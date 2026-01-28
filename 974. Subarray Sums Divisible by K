@@ -2,20 +2,24 @@
 
 public class Solution {
     public int SubarraysDivByK(int[] nums, int k) {
+        int n = nums.Length;
         int count = 0;
-        int currSum = 0;
+        int prefixSum = 0;
+        
         Dictionary<int, int> map = new Dictionary<int,int>(5);
         map.Add(0,1);
-        for(int i = 0; i < nums.Length; i++)
+        
+        for(int i = 0; i < n; i++)
         {
             // Calculate cumulative sum
-            currSum = currSum + nums[i];
+            prefixSum = prefixSum + nums[i];
+
             // Calculate remainder of cumulative sum
-            int rem = currSum % k;
+            int rem = prefixSum % k;
             if(rem < 0)
                 rem = rem + k;
             
-            // If remainder repeats means between the same remainder appeared before and now the subarray is divisible by K 
+            // Remainder repeats means between the same remainder appeared before and now the subarray is divisible by k
             if(map.ContainsKey(rem))
             {
                 count = count + map[rem];
