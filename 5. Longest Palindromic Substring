@@ -1,0 +1,43 @@
+// Google Sumo Logic DE Shaw
+
+// Expand Around Center Concept Two Pointer
+
+public class Solution {
+    public string LongestPalindrome(string s) {
+        if (string.IsNullOrEmpty(s)) 
+            return string.Empty;
+
+        int start = 0, end = 0;
+
+        // For each s[i] consider it as a palindrome center and expand left and right to check palindrome or not
+        for (int i = 0; i < s.Length; i++) {
+            // Case 1: Odd length palindrome (center at a single character)
+            int len1 = ExpandAroundCenter(s, i, i);
+
+            // Case 2: Even length palindrome (center between two characters)
+            int len2 = ExpandAroundCenter(s, i, i + 1);
+
+            // Take the maximum length from both cases
+            int maxLen = Math.Max(len1, len2);
+
+            // Update start and end if new length is greater than previous one
+            if (maxLen > end - start) {
+                start = i - (maxLen - 1) / 2;
+                end = i + maxLen / 2;
+            }
+        }
+        return s.Substring(start, end - start + 1);
+    }
+
+    private int ExpandAroundCenter(string s, int left, int right) {
+        int len = 0;
+        // Expand outward while characters match and indices are within bounds
+        while (left >= 0 && right < s.Length && s[left] == s[right]) {
+            len = right - left + 1;
+            left--;
+            right++;
+        }
+        // Return the length of the palindrome found
+        return len;
+    }
+}
