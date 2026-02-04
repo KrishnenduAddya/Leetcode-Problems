@@ -1,0 +1,33 @@
+// Amazon Adobe Flipkart
+
+// Expand Around Center Concept and Two Pointer
+
+public class Solution {
+    public int CountSubstrings(string s) {
+        int n = s.Length;
+        if(n == 0) 
+            return 0;
+        int count = 0;
+
+        // For each s[i] consider it as a palindrome center and expand left and right to check palindrome or not
+        for(int i = 0; i < n; i++)
+        {
+            // Consider every i is the mid point for odd length and i, i + 1 are the mid points for even length palindrome substring and extends it by -1 in left and +1 in right
+            count = count + ExpandAroundCenter(s, i, i);
+            count = count + ExpandAroundCenter(s, i, i + 1);
+        }
+        return count;
+    }    
+
+    private int ExpandAroundCenter(string s, int left, int right) 
+    {
+        int count = 0;
+        while(left >= 0 && right < s.Length && s[left] == s[right])
+        {    
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+}
