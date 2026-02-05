@@ -1,5 +1,7 @@
 // Amazon Microsoft Housing.com Adobe
 
+// Sliding Window + Hashset for uniqueness
+
 public class Solution {
     public int LengthOfLongestSubstring(string s) {
         // Sliding Window
