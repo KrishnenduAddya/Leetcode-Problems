@@ -1,41 +1,44 @@
-// Amazon Bloomberg Facebook Google Microsoft Uber Yahoo
+// Amazon Bloomberg Facebook Google Microsoft Uber Yahoo Phonepe Adobe
+
+// Sliding Window + Frequency Array
 
 public class Solution {
     public bool CheckInclusion(string s1, string s2) {
-        int n1 = s1.Length;
-        int n2 = s2.Length;
-        if(n1 > n2)
+        int s1Len = s1.Length;
+        int s2Len = s2.Length;
+
+        if(s1Len > s2Len)
             return false;
 
         int[] s1Freq = new int[26];
         int[] windowFreq = new int[26];
-        
-        // Count frequency of s1
-        foreach (char ch in s1) {
-            s1Freq[ch - 'a']++;
-        }
 
-        // Sliding window
-        for (int i = 0; i < n2; i++) {
+        // Count frequency of s1
+        foreach(char ch in s1)
+            s1Freq[ch - 'a']++;
+
+        // Sliding window for s2 
+        for(int i = 0; i < s2Len; i++)
+        {
             windowFreq[s2[i] - 'a']++;
 
             // Maintain window size equal to s1
-            if (i >= n1) {
-                windowFreq[s2[i - n1] - 'a']--;
-            }
+            if(i >= s1Len)
+                windowFreq[s2[i - s1Len] - 'a']--;
 
             // Compare arrays
-            // if(Enumerable.SequenceEqual(s1Freq, windowFreq)) this inbuilt method will also work
-            if (AreEqual(s1Freq, windowFreq)) {
+            if(AreEqual(windowFreq, s1Freq))
                 return true;
-            }
         }
         return false;
     }
 
-    private bool AreEqual(int[] arr1, int[] arr2) {
-        for (int i = 0; i < 26; i++) {
-            if (arr1[i] != arr2[i]) return false;
+    private bool AreEqual(int[] windowFreq,  int[] s1Freq)
+    {
+        for(int i = 0; i < 26; i++)
+        {
+            if(windowFreq[i] != s1Freq[i])
+                return false;
         }
         return true;
     }
