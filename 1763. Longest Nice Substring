@@ -1,0 +1,34 @@
+// Google PayPal Flipkart
+
+// Divide and Conquer Approach
+
+// If either lowercase or uppercase version of a character is missing, it's a bad character
+// Idea is find if a bad character present then divide the string around the bad character index
+
+public class Solution {
+    public string LongestNiceSubstring(string s) {
+        int n = s.Length;
+        if(n < 2)
+            return string.Empty;
+
+        for(int i = 0; i < n; i++)
+        {
+            // If either lowercase or uppercase version is missing, it's a bad character
+            if(!(s.Contains(char.ToLower(s[i])) && s.Contains(char.ToUpper(s[i]))))
+            {
+                // Split around this bad character
+                string left = LongestNiceSubstring(s.Substring(0, i));
+                string right = LongestNiceSubstring(s.Substring(i + 1));
+
+                // Return the longer substring (or earlier if equal length) 
+                if (left.Length >= right.Length)
+                    return left;
+                else 
+                    return right;
+            }
+        }
+
+        // If no bad character found, the whole string is nice 
+        return s;
+    }
+}
