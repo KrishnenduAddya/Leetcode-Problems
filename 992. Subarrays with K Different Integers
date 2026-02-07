@@ -1,0 +1,51 @@
+// Amazon Goldman Sachs Zomato
+
+// Sliding Window + Frequency Map
+
+We need to count subarrays with exactly k distinct integers. A powerful trick here is to use the sliding window technique with the idea:
+countExactlyK(𝑛𝑢𝑚𝑠, 𝑘) = countAtMostK(𝑛𝑢𝑚𝑠, 𝑘) - countAtMostK(𝑛𝑢𝑚𝑠, 𝑘 - 1)
+
+Why this works:
+
+=> countAtMostK(nums, k) gives the number of subarrays with at most k distinct integers.
+=> Subtracting countAtMostK(nums, k-1) removes those with fewer than k distinct integers.
+=> What’s left are subarrays with exactly k distinct integers.
+
+public class Solution {
+    public int SubarraysWithKDistinct(int[] nums, int k) {
+        // CountExactlyK = CountAtMostK(nums, k) - CountAtMostK(nums, k - 1)
+        return CountAtMostK(nums, k) - CountAtMostK(nums, k - 1);
+    }
+
+    private int CountAtMostK(int[] nums, int k)
+    {
+        int n = nums.Length;
+        int count = 0;
+        
+        // Tracks unique integers for current window subarray
+        var windowFreq = new Dictionary<int, int>();
+        
+        int left = 0;
+        for(int right = 0; right < n; right++)
+        {
+            // Add/update current integer to frequency map
+            if(windowFreq.ContainsKey(nums[right]))
+                windowFreq[nums[right]]++;
+            else
+                windowFreq.Add(nums[right], 1);
+            
+            // Shrink window if distinct integers exceed k
+            while(windowFreq.Count > k)
+            {
+                windowFreq[nums[left]]--;
+                if(windowFreq[nums[left]] == 0)
+                    windowFreq.Remove(nums[left]);
+                left++;
+            }
+            
+            // All subarrays ending at 'right' and starting from 'left' to 'right' are valid        
+            count += right - left + 1;
+        }
+        return count;
+    }
+}
