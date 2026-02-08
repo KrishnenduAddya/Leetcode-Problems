@@ -13,7 +13,7 @@ public class Solution {
 
         for(int i = 0; i < n; i++)
         {
-            // If either lowercase or uppercase version is missing, it's a bad character
+            // If either lowercase or uppercase version of a character is missing, it's a bad character
             if(!(s.Contains(char.ToLower(s[i])) && s.Contains(char.ToUpper(s[i]))))
             {
                 // Split around this bad character
