@@ -1,16 +1,19 @@
+// Amazon Adobe Sumo Logic
+
 public class Solution {
     public int Search(int[] nums, int target) {
-        int n = nums.Length;
-        int low = 0, high = n - 1;
-        while(low <= high)
-        {
+        int low = 0;
+        int high = nums.Length - 1;
+
+        while (low <= high) {
+            // Find middle index
             int mid = low + (high - low) / 2;
-            if(nums[mid] == target)
+            if (nums[mid] == target)          // Target found
                 return mid;
-            // We apply binary search in sorted array
             // Left half is sorted
             if(nums[low] <= nums[mid])
             {
+                // If target lies within the sorted left half
                 if(target >= nums[low] && target <= nums[mid])
                     high = mid - 1;
                 else
@@ -19,12 +22,13 @@ public class Solution {
             // Right half is sorted
             else
             {
+                // If target lies within the sorted right half
                 if(target >= nums[mid] && target <= nums[high])
                     low = mid + 1;
                 else
                     high = mid - 1;
             }
         }
-        return -1;
+        return -1; // not found
     }
 }
