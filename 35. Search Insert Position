@@ -1,19 +1,22 @@
-// Adobe Amazon Apple Bloomberg Google Microsoft SAP
+// Adobe Amazon Apple Bloomberg Google Microsoft SAP Goldman Sachs
 
 public class Solution {
     public int SearchInsert(int[] nums, int target) {
         int low = 0;
         int high = nums.Length - 1;
-        while(low <= high)
-        {
-            int mid = low + (high - low) / 2;
-            if(nums[mid] == target)
+
+        int mid = 0;
+        while (low <= high) {
+            // Find middle index
+            mid = low + (high - low) / 2;
+            if (nums[mid] == target)          // Target found
                 return mid;
-            else if(nums[mid] > target)
+            else if (target < nums[mid])      // Search left half
                 high = mid - 1;
-            else
+            else                              // Search right half
                 low = mid + 1;
         }
+        // If the loop ends without finding the target, low will point to the correct insertion index. This works because low always moves to the position where the target should be.
         return low;
     }
 }
