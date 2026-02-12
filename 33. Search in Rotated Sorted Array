@@ -5,17 +5,19 @@ public class Solution {
         int low = 0;
         int high = nums.Length - 1;
 
-        while (low <= high) {
-            // Find middle index
+        while(low <= high)
+        {
             int mid = low + (high - low) / 2;
-            if (nums[mid] == target)          // Target found
+            if(nums[mid] == target)
                 return mid;
+            
+            // Determine which half is sorted
             // Left half is sorted
             if(nums[low] <= nums[mid])
             {
                 // If target lies within the sorted left half
-                if(target >= nums[low] && target <= nums[mid])
-                    high = mid - 1;
+                if(target >= nums[low]  && target < nums[mid])
+                    high = mid - 1; // Search in sorted left half
                 else
                     low = mid + 1;
             }
@@ -23,12 +25,13 @@ public class Solution {
             else
             {
                 // If target lies within the sorted right half
-                if(target >= nums[mid] && target <= nums[high])
-                    low = mid + 1;
+                if(target > nums[mid]  && target <= nums[high])
+                    low = mid + 1; // Search in sorted right half
                 else
                     high = mid - 1;
             }
         }
-        return -1; // not found
+
+        return -1;
     }
 }
