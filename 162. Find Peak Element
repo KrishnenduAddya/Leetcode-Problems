@@ -1,0 +1,21 @@
+// Amazon Google Zomato
+
+// Binary Search
+
+public class Solution {
+    public int FindPeakElement(int[] nums) {
+        int left = 0, right = nums.Length - 1;
+
+        while(left < right)
+        {
+            int mid = left + (right - left) / 2;
+            // The slope is rising, the peak is ahead (in the right half) 
+            if(nums[mid] < nums[mid + 1])
+                left = mid + 1;
+            // The slope is falling, the peak is at mid or before
+            else
+                right = mid;
+        }
+        return left;
+    }
+}
