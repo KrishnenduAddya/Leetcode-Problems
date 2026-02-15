@@ -21,7 +21,7 @@ public class Solution {
             int maxLen = Math.Max(len1, len2);
 
             // Update start and end if new length is greater than previous one
-            if (maxLen > end - start) {
+            if (maxLen > end - start + 1) {
                 start = i - (maxLen - 1) / 2;
                 end = i + maxLen / 2;
             }
