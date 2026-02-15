@@ -1,0 +1,61 @@
+// Microsoft Facebook Morgan Stanley
+
+Approach 1 Using a Temporary Array
+----------------------------------
+
+public class Solution {
+    public void Rotate(int[] nums, int k) {
+       int n = nums.Length;
+        // Normalize k to avoid unnecessary rotations when k >= n
+        k = k % n;
+
+        // Create a temporary array to store the last k elements
+        int[] tempArray = new int[k];
+
+        // Copy the last k elements into tempArray in reverse order
+        // Example: nums = [1,2,3,4,5,6,7], k=3 → tempArray = [7,6,5]
+        for(int i = 0; i < k; i++)
+            tempArray[k - i - 1] = nums[n - 1 - i];
+
+        // Shift the remaining n-k elements to the right by k positions
+        // Example: nums = [1,2,3,4,5,6,7], after shift → [?, ?, ?, 1,2,3,4]
+        for(int i = n - 1; i >= k; i--)
+            nums[i] = nums[i - k];
+
+        // Place the saved k elements at the beginning of the array
+        // Example: tempArray = [5,6,7], nums → [5,6,7,1,2,3,4]
+        for(int i = 0; i < k; i++)
+            nums[i] = tempArray[i];
+    }
+}
+
+Approach 2 Without Using a Temporary Array O(1) Space
+-----------------------------------------------------
+
+public class Solution {
+    public void Rotate(int[] nums, int k) {
+       int n = nums.Length;
+        // Normalize k to avoid unnecessary rotations when k >= n
+        k = k % n;
+
+        // Reverse entire array
+        Reverse(nums, 0, n - 1);
+
+        // Reverse first k elements
+        Reverse(nums, 0, k - 1);
+
+        // Reverse remaining n-k elements
+        Reverse(nums, k, n - 1);
+    }
+
+    private void Reverse(int[] nums, int start, int end) {
+        while (start < end)
+        {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
