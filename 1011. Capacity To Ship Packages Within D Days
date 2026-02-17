@@ -1,40 +1,52 @@
+// Amazon Adobe Sumo Logic
+
+// Binary Search on Answer
+
 public class Solution {
     public int ShipWithinDays(int[] weights, int days) {
-        int low = 0, high = 0, n = weights.Length;
-        
-        // Initialize low with largest weight in the array and high with weight array sum as for single element subarray the least weight capacity will be at atleast the largest weight and for whole array maximum weight will be array sum
-        foreach(int w in weights)
-        {
-            low = Math.Max(low, w);
-            high = high + w; // high is treated as sum
-        }
-        
-        int mid = 0, capacity = 0;
+        // The minimum ship capacity must be at least the maximum weight in weights (otherwise that package can’t be shipped)
+        int low = weights.Max();
+
+        // The maximum ship capacity could be the sum of all weights (ship everything in one day)
+        int high = weights.Sum();
+
+        int capacity = 0;
         while(low <= high)
         {
-            mid = low + (high - low) / 2; // Capacity
-            // Count stores in how many days all weights can be shipped for a given capacity = mid
-            int count = 1, tempWeight = 0;
-            foreach(int w in weights)
-            {
-                if(tempWeight + w <= mid) // If adding next weight, capacity does not exceed then add that weight in belt and can be shipped in the same day
-                    tempWeight = tempWeight + w;
-                else // else one extra day will be needed, weight starts from that weight
-                {
-                    tempWeight = w;
-                    count++;
-                }
-            }
-            
-            // If count <= days i.e shipping possible for capacity = mid, so we will check whether we can minimize the capacity to a least weight
-            if(count <= days)
+            int mid = low + (high - low) / 2;
+            // If shipping possible for capacity = mid, so we will check whether we can minimize the capacity to a lesser weight or not
+            if(CanShip(weights, days, mid))
             {
                 capacity = mid;
                 high = mid - 1;
-            } // else increase capacity
-            else 
+            }
+            else // else increase weight for capacity
                 low = mid + 1;
-        }  
+        }
+
         return capacity;
+    }
+
+    private bool CanShip(int[] weights, int days, int mid)
+    {
+        // daysCount stores in how many days all weights can be shipped for a given capacity = mid
+        int daysCount = 1;
+        int currentLoad = 0;
+        foreach(int weight in weights)
+        {
+            // If adding next weight, capacity does not exceed then add that weight in belt and can be shipped in the same day
+            if(currentLoad + weight <= mid)
+            {
+                currentLoad = currentLoad + weight;
+            }
+            else // else one extra day will be needed, weight starts from that weight
+            {
+                currentLoad = weight;
+                daysCount++;
+            }
+        }
+        
+        // If daysCount <= days i.e shipping possible for capacity = mid
+        return daysCount <= days;
     }
 }
