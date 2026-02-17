@@ -1,0 +1,70 @@
+// Flipkart PhonePe Paytm Bloomberg Amazon Microsoft Google NPCI
+
+// Binary Search on Answer
+
+public class Solution {
+    public int MinDays(int[] bloomDay, int m, int k) {
+        int n = bloomDay.Length;
+        
+        // To make m bouquets using k flowers for each banquet we need
+        // m * k flowers, so if we don't have at least m * k flowers, then impossible
+        if((long)m * k > n)
+            return -1;
+
+        // Initialize low with earliest bloom day
+        int low = bloomDay.Min();
+
+        // Initialize high with latest bloom day
+        // By then all flowers will bloom to make bouquets
+        int high = bloomDay.Max();
+
+        int minDays = -1;
+        while(low <= high)
+        {
+            int mid = low + (high - low) / 2;
+            // If we can make bouquets by minDays = mid, we will check whether
+            // we can minimize the minDays to a lesser number of days or not
+            if(CanMake(bloomDay, m, k, mid))
+            {
+                minDays = mid;
+                high = mid - 1;
+            }
+            else
+                low = mid + 1;
+        }
+
+        return minDays;
+    }
+
+    private bool CanMake(int[] bloomDay, int m, int k, int mid)
+    {
+        // Count of bouquets formed
+        int bouquetsCount = 0;
+
+        // Count of consecutive bloomed flowers
+        int flowersCount = 0;
+
+        foreach(int day in bloomDay)
+        {
+            if(day <= mid)
+            {
+                // Flower has bloomed by this day (mid)
+                flowersCount++;
+
+                // If we have k consecutive bloomed flowers, form a bouquet
+                if(flowersCount == k)
+                {
+                    bouquetsCount++;
+
+                    // Reset after forming bouquet
+                    flowersCount = 0;
+                }
+            }
+            else // Reset consecutive bloomed flowers count if adjacent flower is not bloomed
+                flowersCount = 0;
+        }
+        
+        // Return true if we can make at least m bouquets
+        return bouquetsCount >= m;
+    }
+}
