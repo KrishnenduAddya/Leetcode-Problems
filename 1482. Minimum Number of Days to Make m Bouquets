@@ -6,7 +6,7 @@ public class Solution {
     public int MinDays(int[] bloomDay, int m, int k) {
         int n = bloomDay.Length;
         
-        // To make m bouquets using k flowers for each banquet we need
+        // To make m bouquets using k flowers for each bouquet we need
         // m * k flowers, so if we don't have at least m * k flowers, then impossible
         if((long)m * k > n)
             return -1;
