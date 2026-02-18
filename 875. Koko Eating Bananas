@@ -1,40 +1,48 @@
-// Airbnb Facebook Google
+// Airbnb Facebook Google Flipkart Paytm PhonePe
 
-// We are starting with max value such that koko can eat all the bananas,
-// then trying to minimize it
+// Binary Search on Answer
 
 public class Solution {
     public int MinEatingSpeed(int[] piles, int h) {
-        int low = 1, high = -1, ans = -1;
-        
-        foreach(int pile in piles) 
-            high = Math.Max(pile, high);
-        
-        // Binary search to find the smallest valid k.
-        while (low <= high) 
+        // Minimum possible eating speed is 1 banana/hour
+        int low = 1;
+
+        // Maximum possible eating speed is the largest pile
+        int high = piles.Max();
+
+        int minSpeed = high;
+        while(low <= high)
         {
             int mid = low + (high - low) / 2;
-            long ch = CountHour(piles, mid);
-            if (ch <= h) 
+
+            // Check if Koko can finish all bananas at speed = mid
+            if(CanEat(piles, h, mid))
             {
-                ans = mid;
-                high = mid - 1;
+                minSpeed = mid; // Update answer with feasible speed
+                high = mid - 1; // Try smaller speed (search left)
             }
             else
-                low = mid + 1;
+                low = mid + 1;  // Speed too slow, search right
         }
-        return ans;
+        return minSpeed;
     }
-    
-    private long CountHour(int[] piles, int mid) 
+
+    private bool CanEat(int[] piles, int h, int mid)
     {
         long countHour = 0;
-        foreach(int pile in piles) 
-        {
-            countHour += pile / mid;
-            if (pile % mid != 0)
-                countHour++;
+        foreach(int pile in piles)
+        {  
+            // Hours needed for this pile = ceil(pile / speed)
+            // Implemented as integer division + remainder check
+
+            countHour = countHour + pile / mid + (pile % mid != 0 ? 1 : 0);
+            
+            // countHour = countHour + pile / mid;
+            // if(pile % mid != 0)
+            //     countHour++;
         }
-        return countHour;
+        
+        // Return true if total hours is within allowed h
+        return countHour <= h;
     }
 }
