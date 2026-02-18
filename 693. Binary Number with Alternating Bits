@@ -1,0 +1,24 @@
+// Amazon Paypal Paytm
+
+// Bit Manipulation
+
+public class Solution {
+    public bool HasAlternatingBits(int n) {
+        // Store previous bit, initiaze with -1 so that 
+        // for first current bit (0 or 1) it always differs
+        // So prevBit = -1 is just a sentinel value to indicate 
+        // “no previous bit yet,” ensuring the first iteration works
+        // correctly without special handling.
+ 
+        int prevBit = -1; 
+        while (n > 0) {
+            int currBit = n & 1;  // Extract last bit
+            if (currBit == prevBit) {
+                return false;  // Adjacent bits are same
+            }
+            prevBit = currBit;
+            n >>= 1; // Shift right
+        }
+        return true;
+    }
+}
