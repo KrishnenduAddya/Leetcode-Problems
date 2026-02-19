@@ -1,40 +1,54 @@
+// Amazon Google Goldman Sachs
+
+// Binary Search on Answer
+
 public class Solution {
-    public int SplitArray(int[] nums, int m) {
-        int low = 0, high = 0, n = nums.Length;
-        
-        // Initialize low with largest number in the array and high with array sum as for single element subarray the largest sum will be at atleast the largest number and for whole array maximum sum will be array sum
-        for(int i = 0; i < n; i++)
-        {
-            low = Math.Max(low,nums[i]);
-            high = high + nums[i];
-        }
-        
-        int mid = 0, ans = 0;
+    public int SplitArray(int[] nums, int k) {
+        // The minimum possible largest sum is the maximum element in the array
+        // (since no subarray can have a sum smaller than its largest element).
+        int low = nums.Max();
+
+        // The maximum possible largest sum is the sum of the entire array
+        // (if we don't split at all).
+        int high = nums.Sum();
+
+        int minLargestSum = 0;
         while(low <= high)
         {
-            mid = low + (high - low) / 2;
-            //Count stores how many partion can be done for a given sum = mid
-            int count = 1, tempSum = 0;
-            for(int i = 0; i < n; i++)
+            int mid = low + (high - low) / 2;
+
+            // Check if it's possible to split the array into <= k subarrays
+            // such that no subarray sum exceeds mid
+            if(SplitPossible(nums, k, mid))
             {
-                if(tempSum + nums[i] <= mid) 
-                    tempSum = tempSum + nums[i];
-                else
-                {
-                    tempSum = nums[i];
-                    count++;
-                }
-            }
-            
-            // If count <= m i.e partition possible for largest sum = mid, so we will check whether we can minimize the largest sum
-            if(count <= m)
-            {
-                ans = mid;
+                // If possible, update result using mid and try to minimize further
+                minLargestSum = mid;
                 high = mid - 1;
             }
-            else 
+            else // Otherwise, increase the limit
                 low = mid + 1;
-        }  
-        return ans;
+        }
+        return minLargestSum;
+    }
+
+    private bool SplitPossible(int[] nums, int k, int mid)
+    {
+        int subArraySum = 0;
+        int subArrayCount = 1; // start with one subarray
+
+        foreach(int num in nums)
+        {
+            // If adding current number doesn't exceed mid, add it to current subarray
+            if(subArraySum + num <= mid)
+                subArraySum = subArraySum + num;
+            else // Otherwise, start a new subarray
+            {
+                subArraySum = num;
+                subArrayCount++;
+            }
+        }
+        
+        // Return true if we can split into at most k subarrays
+        return subArrayCount <= k;
     }
 }
