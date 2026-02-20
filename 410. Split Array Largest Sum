@@ -1,6 +1,6 @@
 // Amazon Google Goldman Sachs
 
-// Binary Search on Answer
+// Binary Search on Answer LC 410
 
 public class Solution {
     public int SplitArray(int[] nums, int k) {
