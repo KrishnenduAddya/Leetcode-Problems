@@ -1,0 +1,57 @@
+// Flipkart PhonePe Paytm
+
+// Binary Search on Answer
+
+public class Solution {
+    public int MaxDistance(int[] position, int m) {
+        // Since baskets can be anywhere, 
+        // Sorting ensures we place balls in increasing order of positions
+        Array.Sort(position);
+
+        // Minimum possible force will be 1 as minimum distance 
+        // between two baskets can be 1 (closest baskets)
+        int low = 1;
+
+        // Maximum possible force will be distance
+        //  between first and last basket as sorted (farthest baskets)
+        int high = position[position.Length - 1] - position[0];
+
+        int maximizedMinForce = 0;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            // Check if we can place m balls with at least 'mid' distance apart
+            if (CanPlaceBalls(position, m, mid)) {
+                maximizedMinForce = mid;   
+                low = mid + 1; // If feasible, try to maximize the force
+            }
+            else 
+                high = mid - 1; // Not feasible, reduce force
+        }
+
+        return maximizedMinForce;
+    }
+
+    private bool CanPlaceBalls(int[] position, int m, int minForce) {
+        // Place first ball at first basket
+        int lastPlaced = position[0];
+        int placedBallsCount = 1; 
+
+        // Traverse through basket positions
+        foreach (int pos in position) {
+            // Check if current basket is far enough from the last placed ball
+            if (pos - lastPlaced >= minForce) {
+                // Place a ball
+                placedBallsCount++;
+                lastPlaced = pos;
+
+                // If we've placed all m balls successfully, return true.
+                if (placedBallsCount >= m) 
+                    return true;
+            }
+        }
+
+        // If we finish and haven't placed all m balls, return false.
+        return false;
+    }
+}
