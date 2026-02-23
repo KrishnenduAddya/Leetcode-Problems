@@ -1,0 +1,25 @@
+// Microsoft Facebook Morgan Stanley
+
+// Staircase Approach 
+
+public class Solution {
+    public bool SearchMatrix(int[][] matrix, int target) {
+        int m = matrix.Length;
+        int n = matrix[0].Length;
+
+        // Staircase approach, start with top right corner
+        int row = 0;
+        int col = n - 1;
+
+        while(row < m && col >= 0)
+        {
+            if(matrix[row][col] == target)
+                return true;
+            else if(target < matrix[row][col])
+                col--; // Move left
+            else
+                row++; // Move down
+        }
+        return false;
+    }
+}
