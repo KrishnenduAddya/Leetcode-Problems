@@ -1,29 +1,54 @@
+// Flipkart Paytm PhonePe
+
+// Binary Search on 2D Matrix
+
 public class Solution {
     public int KthSmallest(int[][] matrix, int k) {
         int n = matrix.Length;
-        int low = matrix[0][0], high = matrix[n - 1][n - 1];
-        while(low < high) 
+        
+        // The search space is between the smallest and largest elements in the matrix
+        int left = matrix[0][0];              // Smallest element
+        int right = matrix[n - 1][n - 1];     // Largest element
+
+        while (left < right)
         {
-            int mid = low + (high - low) / 2;
-            int count = 0,  i = n - 1, j = 0;
-            // Finding the rank of that mid element 
-            // in the sorted matrix
-            while(i >= 0 && j < n)
-            {
-                if(matrix[i][j] > mid)
-                    i--;
-                else
-                {
-                    count = count + i + 1;
-                    j++;
-                }
-            }
-            // If the rank < k then increase low
-            if(count < k) 
-                low = mid + 1;
-            else 
-                high = mid;
+            int mid = left + (right - left) / 2;
+
+            // Count how many elements are <= mid
+            int count = CountLessEqual(matrix, mid, n);
+
+            // If count is less than k, kth element must be larger → move right
+            if (count < k)
+                left = mid + 1;
+            else
+                right = mid;
         }
-        return low;
+
+        return left;
+    }
+
+    private int CountLessEqual(int[][] matrix, int mid, int n) {
+        int count = 0;
+
+        // Start from bottom left corner
+        int row = n - 1;
+        int col = 0;
+
+        // Traverse matrix intelligently:
+        // If current element <= mid, all elements above in that column are also <= mid
+        // Otherwise, move up one row
+        while (row >= 0 && col < n)
+        {
+            if (matrix[row][col] <= mid)
+            {
+                // Add all elements in this column up to current row
+                count += row + 1;
+                col++;
+            }
+            else
+                row--;
+        }
+
+        return count;
     }
 }
