@@ -1,6 +1,6 @@
 // Amazon Paypal Paytm
 
-// Bit Manipulation
+// Bit Manipulation Basic Bit Operation
 
 public class Solution {
     public bool HasAlternatingBits(int n) {
