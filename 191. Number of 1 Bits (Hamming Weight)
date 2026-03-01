@@ -1,15 +1,23 @@
+// Amazon Sumo Logic Paytm
+
+// Bit Manipulation
+
 1st Approach
 --------------
 // Shift each bit to right most bit and perform bitwise and operation with 1
 public class Solution {
-    public int HammingWeight(uint n) {
-        uint ans = 0;
-        while(n != 0)
-        {
-            ans = ans + (n & 1);
-            n = n >> 1;
+    public int HammingWeight(int n) {
+        // Count to store the set bits
+        int count = 0;
+        
+        while (n > 0) {
+            int currBit = n & 1;  // Extract last bit
+            if (currBit == 1) {
+                count++;
+            }
+            n >>= 1; // Shift right
         }
-    	  return (int)ans;
+        return count;
     }
 }
 
