@@ -1,5 +1,7 @@
 // Goldman Sachs Apple Adobe
 
+// Approach 1
+
 public class Solution {
     public int MissingNumber(int[] nums) {
         int n = nums.Length;
@@ -15,5 +17,28 @@ public class Solution {
         // Missing number is the difference
         return expectedSum - actualSum;
 
+    }
+}
+
+// Approach 2
+
+public class Solution {
+    public int MissingNumber(int[] nums) {
+        // XOR all numbers from 0 to n.
+        // XOR all numbers in the array.
+        // The result will be the missing number (since duplicates cancel out).
+
+        int n = nums.Length;
+        int xorAll = 0, xorNums = 0;
+        
+        for (int i = 0; i <= n; i++) {
+            xorAll ^= i;
+        }
+        
+        foreach (int num in nums) {
+            xorNums ^= num;
+        }
+        
+        return xorAll ^ xorNums;
     }
 }
