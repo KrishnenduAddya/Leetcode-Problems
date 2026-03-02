@@ -27,6 +27,9 @@ public class Solution {
 
 // Brian Karnighan's Algorithm
 // Change the first set bit from right to 0
+- Key property:
+For any integer n, the expression n & (n - 1) clears the lowest set bit (the rightmost 1) in n
+
 public class Solution {
     public int HammingWeight(uint n) {
         int ans = 0;
