@@ -1,3 +1,20 @@
+// Amazon Google Microsoft
+
+// Bitwise Approach
+
+public class Solution {
+    public bool IsPowerOfTwo(int n) {
+        // A power of two has exactly one bit set in its binary form.
+        // Example: 4=0100 8=1000
+        // Property: n & (n - 1) = 0 if n is a power of two.
+        
+        if (n <= 0) return false;
+        
+        return (n & (n - 1)) == 0;
+    }
+}
+
+
 // If a number is power of 2 then number / 2 remainder (number % 2) produces 0 everytime until 1
 
 public class Solution {
@@ -11,3 +28,4 @@ public class Solution {
         return n == 1;
     }
 }
+
