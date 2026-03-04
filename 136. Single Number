@@ -1,0 +1,19 @@
+// Amazon Google Microsoft
+
+public class Solution {
+    public int SingleNumber(int[] nums) {
+        // Use the XOR operator (^):
+        // Property 1: a ^ a = 0 (any number XOR itself cancels out).
+        // Property 2: a ^ 0 = a.
+        // Property 3: XOR is commutative and associative (order doesn’t matter).
+
+        // If we XOR all numbers in the array:
+        // Pairs will cancel each other out (num ^ num = 0).
+        // The single number will remain.
+
+        int ans = 0; 
+        foreach(int num in nums)
+            ans = ans ^ num; // XOR cancels out duplicates
+        return ans;
+    }
+}
