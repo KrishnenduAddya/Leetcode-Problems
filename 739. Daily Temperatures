@@ -1,19 +1,23 @@
+// Adobe Amazon Apple Bloomberg Facebook Google LinkedIn Microsoft Nvidia Uber Flipkart Paytm PhonePe
+
 public class Solution {
     public int[] DailyTemperatures(int[] temperatures) {
+        // Monotonic Stack, here stack ensures we only look back at colder days.
         int n = temperatures.Length;
-        int[] result = new int[n];
+        int[] answer = new int[n];
         Stack<int> stack = new Stack<int>();
-        for(int i = 0; i < n; i++) 
+
+        for(int i = 0; i < n; i++)
         {
-            // For temperature greater than temperature for top of stack pop top and fill result
+            // While current temperature is greater than the temperature at the index on top of the stack
             while(stack.Count > 0 && temperatures[i] > temperatures[stack.Peek()])
             {
-                int index = stack.Pop();
-                result[index] = i - index;
+                int prevIndex = stack.Pop(); // Pop the colder day
+                answer[prevIndex] = i - prevIndex; // Calculate days waited
             }
-            // Smaller or equal temperature can be pushed over the top of the array
+            // Push current day's index (only for lesser or equal temperature)
             stack.Push(i);
         }
-        return result;
+        return answer;
     }
 }
