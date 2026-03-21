@@ -1,0 +1,42 @@
+// Flipkart PhonePe Morgan Stanley
+
+// Monotonic Stack
+
+public class Solution {
+    public int[] AsteroidCollision(int[] asteroids) {
+        // Use a stack to keep track of asteroids moving right.
+        // When a left moving asteroid comes in, check the stack top:
+        // If the top asteroid is smaller → pop it (it explodes).
+        // If equal size → pop it and discard the current asteroid (both explode).
+        // If larger → discard the current asteroid (it explodes).
+        // If no collision → push the asteroid.
+
+        Stack<int> stack = new Stack<int>();
+
+        foreach (int asteroid in asteroids) {
+            bool currentAlive = true;
+
+            // Collision only possible if asteroid is moving left (<0)
+            while (currentAlive && asteroid < 0 && stack.Count > 0 && stack.Peek() > 0)
+            {
+                int top = stack.Peek();
+
+                if (Math.Abs(top) < Math.Abs(asteroid))
+                    stack.Pop(); // Top asteroid explodes, keep checking further collisions
+                else if (Math.Abs(top) == Math.Abs(asteroid)) {
+                    stack.Pop(); // Both explode
+                    currentAlive = false;
+                }
+                else
+                    currentAlive = false; // Current asteroid explodes
+            }
+
+            if (currentAlive)
+                stack.Push(asteroid);
+        }
+
+        int[] result = stack.ToArray();
+        Array.Reverse(result); // Stack is LIFO, reverse to get correct order
+        return result;
+    }
+}
