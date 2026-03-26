@@ -1,0 +1,42 @@
+// Google PayPal DE Shaw
+
+public class Solution {
+    public int LargestRectangleArea(int[] heights) {
+        // Use a stack to store indices of bars in increasing height order.
+        // Traverse through the histogram:
+        // If the current bar is taller than the bar at the stack’s top, push its index.
+        // If the current bar is shorter, pop from the stack until the stack is valid again.
+        // For each popped bar:
+        // Height = height of the popped bar.
+        // Width = difference between current index and the new stack top index - 1.
+        // Compute area = height × width.
+        // After processing all bars, clear the stack (same logic as above).
+        // Keep track of the maximum area.
+
+        // Stack store indices of bars, it helps us find the next smaller and previous smaller boundaries
+        Stack<int> stack = new Stack<int>();
+        int maxArea = 0;
+        
+        // Traverse all bars, plus one extra iteration with height = 0
+        // This ensures we flush out remaining bars in the stack
+        for (int i = 0; i <= heights.Length; i++) {
+            // Current height: if we’re past the end, treat as 0
+            int h = (i == heights.Length) ? 0 : heights[i];
+            
+            // While current bar is shorter than the bar at stack top, pop bars and calculate area for each
+            while (stack.Count > 0 && h < heights[stack.Peek()]) {
+                int height = heights[stack.Pop()];
+                
+                // Width depends on whether stack is empty: if empty, rectangle extends from 0 to i, otherwise, rectangle extends from stack.Peek() + 1 to i - 1
+                int width = stack.Count == 0 ? i : i - stack.Peek() - 1;
+                
+                maxArea = Math.Max(maxArea, height * width);
+            }
+            
+            // Push current index to stack
+            stack.Push(i);
+        }
+        
+        return maxArea;
+    }
+}
