@@ -1,0 +1,48 @@
+// Amazon Goldman Sachs Zomato
+
+// Follow up of Largest Rectangle in Histogram
+
+public class Solution
+{
+    public int MaximalRectangle(char[][] matrix)
+    {
+        if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0)
+            return 0;
+
+        int cols = matrix[0].Length;
+        
+        // heights[j] stores the "height" of histogram at column j
+        // Extra slot at the end (set to 0) ensures stack is flushed
+        int[] heights = new int[cols + 1];
+        int maxArea = 0;
+
+        // Process each row
+        foreach (var row in matrix)
+        {
+            // Step 1: Update histogram heights
+            for (int j = 0; j < cols; j++)
+            {
+                if (row[j] == '1')
+                    heights[j] += 1;   // Stack another 1 vertically
+                else
+                    heights[j] = 0;    // Reset if we hit a '0'
+            }
+
+            // Step 2: Compute largest rectangle in histogram
+            Stack<int> stack = new Stack<int>();
+            for (int j = 0; j <= cols; j++)
+            {
+                // Maintain increasing stack of heights
+                while (stack.Count > 0 && heights[j] < heights[stack.Peek()])
+                {
+                    int h = heights[stack.Pop()]; // Height of popped bar
+                    int w = stack.Count == 0 ? j : j - stack.Peek() - 1; // Width
+                    maxArea = Math.Max(maxArea, h * w);
+                }
+                stack.Push(j);
+            }
+        }
+
+        return maxArea;
+    }
+}
