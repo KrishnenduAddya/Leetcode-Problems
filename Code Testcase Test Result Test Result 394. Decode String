@@ -1,0 +1,41 @@
+// Google Paypal Zomato
+
+public class Solution {
+    public string DecodeString(string s) {
+        Stack<int> countStack = new Stack<int>();       // Holds repeat counts
+        Stack<StringBuilder> stringStack = new Stack<StringBuilder>(); // Holds previous strings
+        StringBuilder current = new StringBuilder();    // Current decoded substring
+        int k = 0;                                      // Current number
+
+        foreach (char c in s) {
+            if (char.IsDigit(c)) {
+                // Build the number (could be multi-digit)
+                k = k * 10 + (c - '0');
+            }
+            else if (c == '[') {
+                // Push current state and reset
+                countStack.Push(k);
+                stringStack.Push(current);
+                current = new StringBuilder();
+                k = 0;
+            }
+            else if (c == ']') {
+                // Pop count and previous string
+                int repeatTimes = countStack.Pop();
+                StringBuilder decoded = stringStack.Pop();
+                
+                // Append repeated substring
+                for (int i = 0; i < repeatTimes; i++) {
+                    decoded.Append(current);
+                }
+                current = decoded;
+            }
+            else {
+                // Normal character, add to current substring
+                current.Append(c);
+            }
+        }
+
+        return current.ToString();
+    }
+}
